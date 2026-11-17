@@ -117,6 +117,57 @@
 
   .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
   .toast.show{opacity:1;transform:translateY(0)}
+
+  /* WebMCP section */
+  .webmcp-section{padding:28px 32px 40px;border-top:2px solid #e2e8f0}
+  .webmcp-title{font-size:17px;font-weight:800;color:#0f172a;margin-bottom:4px}
+  .webmcp-subtitle{font-size:13px;color:#64748b;max-width:600px;margin-bottom:6px}
+  .webmcp-badge{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;border:1px solid #c4b5fd;margin-bottom:16px}
+  .webmcp-connect-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:22px;max-width:540px;margin-bottom:24px}
+  .webmcp-connect-card.connected{border-color:#059669;background:#f0fdf4}
+  .endpoint-label{font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:6px}
+  .endpoint-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .endpoint-url{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:7px;padding:9px 14px;font-family:monospace;font-size:13px;color:#0f172a;flex:1}
+  .connect-btn{background:#059669;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+  .connect-btn:hover{background:#047857}
+  .connect-note{font-size:11px;color:#94a3b8;margin-top:6px}
+  .connect-status{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#059669;margin-bottom:14px}
+  .connect-dot{width:9px;height:9px;background:#059669;border-radius:50%;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:4px}
+  .tools-col-title{font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;letter-spacing:.05em;margin-bottom:8px}
+  .tool-pill{display:flex;align-items:center;gap:7px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;padding:6px 10px;margin-bottom:5px;font-size:12px}
+  .tool-pill code{font-family:monospace;color:#0f172a;font-size:11px;font-weight:600}
+  .tool-pill span{color:#64748b;font-size:11px}
+  .tool-pill.locked{background:#fef2f2;border-color:#fecaca}
+  .tool-pill.locked code{color:#dc2626}
+  .webmcp-instruction-row{display:flex;gap:10px;margin-bottom:12px;max-width:640px}
+  .webmcp-input{flex:1;border:1.5px solid #d1d5db;border-radius:9px;padding:10px 14px;font-size:13px;color:#0f172a;outline:none;background:#fff}
+  .webmcp-input:focus{border-color:#059669}
+  .webmcp-send-btn{background:#059669;color:#fff;border:none;padding:10px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer}
+  .webmcp-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .webmcp-chip{background:#fff;border:1.5px solid #d1d5db;color:#334155;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+  .webmcp-chip:hover{border-color:#059669;color:#059669;background:#f0fdf4}
+  .agent-activity-feed{background:#0f172a;border-radius:12px;padding:16px 18px;margin-bottom:16px;max-width:640px;display:none}
+  .agent-activity-feed.show{display:block}
+  .activity-feed-title{font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .activity-line{font-family:monospace;font-size:12px;color:#a7f3d0;margin-bottom:4px;opacity:0;transition:opacity .3s}
+  .activity-line.show{opacity:1}
+  .activity-line.done{color:#34d399}
+  .webmcp-result-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:18px 20px;max-width:640px;margin-bottom:12px;display:none}
+  .webmcp-result-card.show{display:block}
+  .result-title{font-size:14px;font-weight:800;color:#0f172a;margin-bottom:6px}
+  .result-body{font-size:13px;color:#334155;line-height:1.6;margin-bottom:14px}
+  .result-action-btn{background:#059669;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+  .result-action-btn:hover:not([disabled]){background:#047857}
+  .webmcp-human-card{background:#fffbeb;border:2px solid #f59e0b;border-radius:12px;padding:18px 20px;max-width:640px;margin-bottom:12px;display:none}
+  .webmcp-human-card.show{display:block}
+  .human-card-title{font-size:14px;font-weight:800;color:#92400e;margin-bottom:6px}
+  .human-card-body{font-size:13px;color:#78350f;margin-bottom:14px;line-height:1.6}
+  .human-card-btns{display:flex;gap:10px}
+  .human-primary-btn{background:#d97706;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+  .human-secondary-btn{background:#fff;color:#92400e;border:1.5px solid #f59e0b;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+  .human-routing-label{font-size:11px;color:#94a3b8;margin-top:8px}
 </style>
 </head>
 <body>
@@ -315,6 +366,93 @@
       </div>
     </div>
   </div>
+
+  <!-- WebMCP: Bring Your Own Agent -->
+  <div class="webmcp-section">
+    <div class="webmcp-title">🔌 Connect Your AI Agent</div>
+    <div class="webmcp-subtitle">Give your personal AI assistant access to Meridian via WebMCP — it can browse and act on your behalf, within your permissions.</div>
+    <div class="webmcp-badge">WebMCP · Agent-Optimized Portal</div>
+
+    <!-- Pre-connected state -->
+    <div class="webmcp-connect-card" id="webmcp-connect-card">
+      <div class="endpoint-label">WebMCP Endpoint</div>
+      <div class="endpoint-row">
+        <div class="endpoint-url">meridianbank.com/.well-known/mcp</div>
+        <button class="connect-btn" onclick="connectAgent()">Connect Agent →</button>
+      </div>
+      <div class="connect-note">Paste this endpoint into your AI assistant's MCP settings — Claude, Copilot, or any MCP-compatible agent.</div>
+    </div>
+
+    <!-- Connected state -->
+    <div id="webmcp-connected" style="display:none">
+      <div class="webmcp-connect-card connected" style="max-width:640px">
+        <div class="connect-status"><div class="connect-dot"></div> Claude connected via WebMCP</div>
+        <div class="tools-grid">
+          <div>
+            <div class="tools-col-title">✅ Available to your agent</div>
+            <div class="tool-pill"><code>get_account_summary</code><span>— Read balances</span></div>
+            <div class="tool-pill"><code>get_mortgage_rates</code><span>— Browse rates</span></div>
+            <div class="tool-pill"><code>compare_products</code><span>— Compare options</span></div>
+            <div class="tool-pill"><code>browse_offers</code><span>— Personalized offers</span></div>
+            <div class="tool-pill"><code>get_transaction_history</code><span>— Recent activity</span></div>
+          </div>
+          <div>
+            <div class="tools-col-title">🔒 Requires human authorization</div>
+            <div class="tool-pill locked"><span class="lock">🔒</span><code>apply_for_loan</code><span>— Applications</span></div>
+            <div class="tool-pill locked"><span class="lock">🔒</span><code>wire_transfer</code><span>— Wire transfers</span></div>
+            <div class="tool-pill locked"><span class="lock">🔒</span><code>sign_document</code><span>— Signing</span></div>
+            <div class="tool-pill locked"><span class="lock">🔒</span><code>make_payment</code><span>— Payments</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="webmcp-instruction-row">
+        <input class="webmcp-input" type="text" placeholder="Tell your agent what to do..." id="webmcp-text-input" />
+        <button class="webmcp-send-btn">→</button>
+      </div>
+      <div class="webmcp-chips">
+        <div class="webmcp-chip" onclick="runMortgageFlow()">Find me the best mortgage for a $400k home in Austin, TX</div>
+        <div class="webmcp-chip" onclick="runSavingsFlow()">Compare my savings account options</div>
+        <div class="webmcp-chip">What can I upgrade on my current plan?</div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="agent-activity-feed" id="webmcp-activity">
+        <div class="activity-feed-title">⚡ Agent Activity</div>
+        <div id="webmcp-activity-lines"></div>
+      </div>
+
+      <!-- Mortgage result -->
+      <div class="webmcp-result-card" id="webmcp-mortgage-result">
+        <div class="result-title">Best match: 15-Year Fixed at 5.9%</div>
+        <div class="result-body">
+          Saves <strong>$182,400</strong> over loan life vs. 30-year fixed<br>
+          Monthly payment: <strong>$3,370</strong> on $400k<br>
+          Break-even vs. 30-yr: <strong>3.1 years</strong>
+        </div>
+        <button class="result-action-btn" id="mortgage-apply-btn" onclick="showMortgageHuman()">Apply for this rate →</button>
+      </div>
+      <div class="webmcp-human-card" id="webmcp-human-mortgage">
+        <div class="human-card-title">🛑 Human Authorization Required</div>
+        <div class="human-card-body">Your agent cannot submit a loan application on your behalf — this action requires your identity verification and digital signature.</div>
+        <div class="human-card-btns">
+          <button class="human-primary-btn">Continue as Alex →</button>
+          <button class="human-secondary-btn">Save for later</button>
+        </div>
+        <div class="human-routing-label">⚙️ <code>apply_for_loan</code> requires human authorization — configured in Self-Service Studio</div>
+      </div>
+
+      <!-- Savings result -->
+      <div class="webmcp-result-card" id="webmcp-savings-result">
+        <div class="result-title">High-Yield Savings: 4.8% APY</div>
+        <div class="result-body">
+          Your current savings rate: <strong>0.5% APY</strong><br>
+          Potential gain on $31,200 balance: <strong>+$1,340/yr</strong>
+        </div>
+        <button class="result-action-btn" id="savings-switch-btn" onclick="executeSavingsSwitch()">Switch to High-Yield →</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -351,6 +489,93 @@ function showMortgageHandoff() {
   document.getElementById('az-handoff').classList.add('show');
   document.getElementById('az-cards').style.opacity = '0.4';
   showToast('👤 Handing off to Marcus T. — Home Lending');
+}
+
+function connectAgent() {
+  document.getElementById('webmcp-connect-card').style.display = 'none';
+  document.getElementById('webmcp-connected').style.display = 'block';
+  showToast('✓ Claude connected via WebMCP');
+}
+
+function clearChildren(el) {
+  while(el.firstChild) el.removeChild(el.firstChild);
+}
+
+function resetActivityFeed() {
+  document.getElementById('webmcp-activity').classList.remove('show');
+  clearChildren(document.getElementById('webmcp-activity-lines'));
+  document.getElementById('webmcp-mortgage-result').classList.remove('show');
+  document.getElementById('webmcp-human-mortgage').classList.remove('show');
+  document.getElementById('webmcp-savings-result').classList.remove('show');
+  const applyBtn = document.getElementById('mortgage-apply-btn');
+  if(applyBtn) { applyBtn.textContent = 'Apply for this rate →'; applyBtn.disabled = false; applyBtn.style.background = ''; }
+  const switchBtn = document.getElementById('savings-switch-btn');
+  if(switchBtn) { switchBtn.textContent = 'Switch to High-Yield →'; switchBtn.disabled = false; switchBtn.style.background = ''; }
+}
+
+function addActivityLine(text, isDone, delay, container) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const line = document.createElement('div');
+      line.className = 'activity-line' + (isDone ? ' done' : '');
+      line.textContent = text;
+      container.appendChild(line);
+      requestAnimationFrame(() => line.classList.add('show'));
+      resolve();
+    }, delay);
+  });
+}
+
+function runMortgageFlow() {
+  resetActivityFeed();
+  const feed = document.getElementById('webmcp-activity');
+  const lines = document.getElementById('webmcp-activity-lines');
+  feed.classList.add('show');
+  Promise.resolve()
+    .then(() => addActivityLine('🔍 Calling get_mortgage_rates...', false, 100, lines))
+    .then(() => addActivityLine('📊 Calling compare_products — 30-yr fixed vs 15-yr fixed vs ARM...', false, 500, lines))
+    .then(() => addActivityLine('✓ Analysis complete', true, 1100, lines))
+    .then(() => setTimeout(() => document.getElementById('webmcp-mortgage-result').classList.add('show'), 1500));
+}
+
+function runSavingsFlow() {
+  resetActivityFeed();
+  const feed = document.getElementById('webmcp-activity');
+  const lines = document.getElementById('webmcp-activity-lines');
+  feed.classList.add('show');
+  Promise.resolve()
+    .then(() => addActivityLine('🔍 Calling get_account_summary...', false, 100, lines))
+    .then(() => addActivityLine('📊 Calling browse_offers — savings products...', false, 500, lines))
+    .then(() => addActivityLine('✓ Personalized options ready', true, 1100, lines))
+    .then(() => setTimeout(() => document.getElementById('webmcp-savings-result').classList.add('show'), 1500));
+}
+
+function showMortgageHuman() {
+  document.getElementById('webmcp-human-mortgage').classList.add('show');
+  const btn = document.getElementById('mortgage-apply-btn');
+  btn.textContent = '🔒 Requires human authorization';
+  btn.disabled = true;
+  btn.style.background = '#94a3b8';
+}
+
+function executeSavingsSwitch() {
+  const feed = document.getElementById('webmcp-activity');
+  const lines = document.getElementById('webmcp-activity-lines');
+  clearChildren(lines);
+  feed.classList.add('show');
+  const btn = document.getElementById('savings-switch-btn');
+  btn.disabled = true;
+  btn.style.background = '#94a3b8';
+  btn.textContent = 'Processing...';
+  Promise.resolve()
+    .then(() => addActivityLine('⚡ Calling update_savings_tier...', false, 100, lines))
+    .then(() => addActivityLine('✓ Switched to High-Yield Savings — 4.8% APY effective tomorrow', true, 700, lines))
+    .then(() => setTimeout(() => {
+      btn.textContent = '✓ Switched to High-Yield Savings';
+      btn.style.background = '#065f46';
+      btn.disabled = false;
+      showToast('✓ High-Yield Savings activated — 4.8% APY effective tomorrow');
+    }, 1200));
 }
 
 // On load: check if referred from AI
