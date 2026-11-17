@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Interface — Meridian Bank</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0f172a;min-height:100vh;display:flex;flex-direction:column}
+  .topnav{background:#052e16;color:#fff;display:flex;align-items:center;gap:0;padding:0 24px;height:52px;position:sticky;top:0;z-index:100;flex-shrink:0}
+  .topnav-brand{font-weight:700;font-size:15px;color:#6ee7b7;margin-right:32px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .topnav-brand span{font-size:20px}
+  .topnav-links{display:flex;gap:2px;flex:1}
+  .nav-btn{background:none;border:none;color:#a7f3d0;padding:0 16px;height:52px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+  .nav-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
+  .nav-btn.active{color:#fff;border-bottom-color:#34d399;background:rgba(52,211,153,.1)}
+  .nav-label{margin-left:auto;color:#6ee7b7;font-size:11px;white-space:nowrap}
+
+  .ai-page{flex:1;display:flex;flex-direction:column;height:calc(100vh - 52px)}
+  .ai-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .ai-header-left{display:flex;align-items:center;gap:12px}
+  .ai-logo{width:32px;height:32px;background:#052e16;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6ee7b7;font-weight:700;font-size:13px}
+  .ai-header-title{font-weight:600;font-size:15px;color:#0f172a}
+  .ai-header-sub{font-size:11px;color:#059669;font-weight:500}
+  .ai-routing-badge{background:#f0fdf4;border:1px solid #6ee7b7;color:#059669;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none}
+  .ai-routing-badge:hover{background:#d1fae5}
+
+  .ai-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;max-width:760px;width:100%;margin:0 auto}
+  .ai-bubble{max-width:88%;padding:12px 16px;border-radius:4px 14px 14px 14px;font-size:14px;line-height:1.6;background:#f8fafc;border:1px solid #e2e8f0;color:#0f172a}
+  .ai-bubble.user{background:#1e293b;color:#fff;border:none;border-radius:14px 4px 14px 14px;align-self:flex-end;margin-left:auto}
+  .typing-indicator{display:flex;gap:4px;padding:14px 18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px 14px 14px 14px;width:fit-content}
+  .typing-dot{width:7px;height:7px;border-radius:50%;background:#94a3b8;animation:bounce .9s infinite}
+  .typing-dot:nth-child(2){animation-delay:.2s}
+  .typing-dot:nth-child(3){animation-delay:.4s}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+  .account-card{background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:12px;padding:16px;margin-top:8px}
+  .account-card-title{font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+  .account-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d1fae5;font-size:13px}
+  .account-row:last-child{border-bottom:none}
+  .account-row .label{color:#166534}
+  .account-row .amount{font-weight:700;color:#052e16}
+  .success-label{color:#059669;font-size:12px;font-weight:600;margin-top:10px;display:flex;align-items:center;gap:5px}
+
+  .routing-card{border:2px solid #059669;border-radius:14px;padding:18px 20px;margin-top:12px;background:#f0fdf4}
+  .routing-card-header{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .routing-card-zone{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#059669;background:#d1fae5;padding:2px 8px;border-radius:10px}
+  .routing-card-title{font-weight:700;font-size:14px;color:#052e16;margin-bottom:3px}
+  .routing-card-sub{font-size:12px;color:#166534;margin-bottom:14px}
+  .routing-card-btn{background:#059669;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;width:100%}
+  .routing-card-btn:hover{background:#047857}
+  .routing-card-btn.human{background:#1e293b}
+  .routing-card-btn.human:hover{background:#0f172a}
+  .routing-rule-label{font-size:11px;color:#94a3b8;margin-top:10px;display:flex;align-items:center;gap:4px}
+
+  .verify-card{background:#fefce8;border:1.5px solid #fbbf24;border-radius:12px;padding:14px;margin-top:8px}
+  .verify-card-title{font-size:12px;font-weight:700;color:#92400e;margin-bottom:8px}
+  .verify-steps{font-size:12px;color:#78350f;line-height:1.9}
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .chip{background:#f0fdf4;border:1px solid #6ee7b7;color:#059669;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+  .chip:hover{background:#d1fae5;border-color:#059669}
+  .chip.studio-chip{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+  .chip.studio-chip:hover{background:#dbeafe}
+
+  .ai-starters{padding:16px 24px 20px;border-top:1px solid #f1f5f9;max-width:760px;width:100%;margin:0 auto;flex-shrink:0}
+  .starters-label{font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .starters-grid{display:flex;gap:10px;flex-wrap:wrap}
+  .starter-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#334155;cursor:pointer;transition:all .15s;flex:1;min-width:200px;line-height:1.4}
+  .starter-card:hover{border-color:#059669;color:#052e16;background:#f0fdf4}
+
+  .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
+  .toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-brand"><span>🏦</span> Meridian Bank</div>
+  <div class="topnav-links">
+    <a href="index.html" class="nav-btn">Overview</a>
+    <a href="ai.html" class="nav-btn active">AI Interface</a>
+    <a href="portal.html" class="nav-btn">Customer Portal</a>
+    <a href="studio.html" class="nav-btn">Self-Service Studio</a>
+  </div>
+  <div class="nav-label">Help Center of the Future — Leadership Demo</div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<div class="ai-page">
+  <div class="ai-header">
+    <div class="ai-header-left">
+      <div class="ai-logo">AI</div>
+      <div>
+        <div class="ai-header-title">AI Assistant</div>
+        <div class="ai-header-sub">Powered by Meridian Bank Self-Service</div>
+      </div>
+    </div>
+    <a href="studio.html" class="ai-routing-badge">⚙️ Routing Config</a>
+  </div>
+
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-bubble">
+      Hello, Alex! I'm connected to Meridian Bank's self-service ecosystem. I can check your accounts, help you explore products, or connect you with a specialist — all based on what you need. What can I help you with today?
+    </div>
+  </div>
+
+  <div class="ai-starters" id="ai-starters">
+    <div class="starters-label">Suggested actions</div>
+    <div class="starters-grid">
+      <div class="starter-card" onclick="runFlow('balance')">💰 What's my account balance?</div>
+      <div class="starter-card" onclick="runFlow('mortgage')">🏠 I want to explore refinancing my mortgage</div>
+      <div class="starter-card" onclick="runFlow('wire')">📤 I need to wire $8,000 to escrow</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let aiFlowActive = false;
+
+function getWireRoute() {
+  return localStorage.getItem('meridian_wireTransferRoute') || 'human';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function addMsg(html, isUser) {
+  const msgs = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className = 'ai-bubble' + (isUser ? ' user' : '');
+  div.innerHTML = html;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function showTyping(ms) {
+  return new Promise(resolve => {
+    const msgs = document.getElementById('ai-messages');
+    const dot = document.createElement('div');
+    dot.className = 'typing-indicator';
+    dot.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    msgs.appendChild(dot);
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => { dot.remove(); resolve(); }, ms);
+  });
+}
+
+function hideStarters() {
+  document.getElementById('ai-starters').style.display = 'none';
+}
+
+async function runFlow(type) {
+  if(aiFlowActive) return;
+  aiFlowActive = true;
+  hideStarters();
+  if(type === 'balance') await flowBalance();
+  else if(type === 'mortgage') await flowMortgage();
+  else if(type === 'wire') await flowWire();
+  aiFlowActive = false;
+}
+
+async function flowBalance() {
+  addMsg('💰 What\'s my account balance?', true);
+  await showTyping(1200);
+  addMsg(`
+    Here are your current Meridian balances, Alex:
+    <div class="account-card">
+      <div class="account-card-title">Account Summary — Nov 17, 2025</div>
+      <div class="account-row"><span class="label">Checking ···4821</span><span class="amount">$12,400.00</span></div>
+      <div class="account-row"><span class="label">Savings ···7703</span><span class="amount">$31,200.00</span></div>
+      <div class="account-row"><span class="label">Credit Available</span><span class="amount">$4,200.00</span></div>
+      <div class="success-label">✓ Executed in-AI — no portal redirect needed</div>
+    </div>
+    <div class="chips">
+      <div class="chip" onclick="resetAI()">↩ Back to menu</div>
+      <div class="chip" onclick="runFlow('mortgage')">Explore mortgage options</div>
+    </div>
+  `, false);
+}
+
+async function flowMortgage() {
+  addMsg('🏠 I want to explore refinancing my mortgage', true);
+  await showTyping(1500);
+  addMsg(`
+    I can tell you that current 30-year rates at Meridian are <strong>6.4%</strong>, and the 15-year is <strong>5.9%</strong>. To see your personalized options based on your home value and credit profile, I'll open the Meridian portal — it's built for this kind of comparison.
+    <div class="routing-card">
+      <div class="routing-card-header">
+        <div class="routing-card-zone">🌐 Portal Zone</div>
+      </div>
+      <div class="routing-card-title">Routing to Meridian Portal</div>
+      <div class="routing-card-sub">Discovery &amp; Comparison — this action is optimized for browsing, not in-AI execution</div>
+      <button class="routing-card-btn" onclick="goToPortalFromAI()">Open Meridian Portal →</button>
+    </div>
+    <div class="routing-rule-label">⚙️ Routing rule: Mortgage inquiry → Portal (configured in Self-Service Studio)</div>
+  `, false);
+}
+
+async function flowWire() {
+  addMsg('📤 I need to wire $8,000 to escrow', true);
+  const route = getWireRoute();
+
+  if(route === 'inai') {
+    await showTyping(1300);
+    addMsg(`
+      I can process this wire for you, Alex. Let me verify your identity first.
+      <div class="verify-card">
+        <div class="verify-card-title">🔐 Identity Verification</div>
+        <div class="verify-steps">
+          ✓ Account ownership confirmed<br>
+          ✓ Device recognized (iPhone 14 · Last used today)<br>
+          ✓ Biometric match — Touch ID
+        </div>
+      </div>
+    `, false);
+    await showTyping(1400);
+    addMsg(`
+      <div class="account-card">
+        <div class="account-card-title">Wire Transfer Queued</div>
+        <div class="account-row"><span class="label">Amount</span><span class="amount">$8,000.00</span></div>
+        <div class="account-row"><span class="label">To</span><span class="amount">Escrow Account #4471</span></div>
+        <div class="account-row"><span class="label">Expected Arrival</span><span class="amount">Nov 18 by 5pm</span></div>
+        <div class="success-label">✓ Wire of $8,000 to Escrow Account #4471 queued for processing</div>
+      </div>
+      <div class="routing-rule-label">⚙️ Routing rule: Wire Transfer → In-AI (updated in Self-Service Studio)</div>
+    `, false);
+  } else {
+    await showTyping(1300);
+    addMsg(`
+      Wire transfers are high-stakes and irreversible. Meridian requires human verification for this action to protect your account.
+      <div class="routing-card">
+        <div class="routing-card-header">
+          <div class="routing-card-zone" style="background:#fee2e2;color:#dc2626">👤 Human Zone</div>
+        </div>
+        <div class="routing-card-title">Connecting to a Meridian Agent</div>
+        <div class="routing-card-sub">Secure handoff — your session context will be shared with the agent</div>
+        <button class="routing-card-btn human">Start Secure Session →</button>
+      </div>
+      <div class="routing-rule-label">⚙️ Routing rule: Wire Transfer → Human Required (configured in Self-Service Studio)</div>
+      <div class="chips" style="margin-top:12px">
+        <a href="studio.html" class="chip studio-chip">Change this in Studio ⚙️</a>
+      </div>
+    `, false);
+  }
+}
+
+function goToPortalFromAI() {
+  localStorage.setItem('meridian_portalReferred', 'true');
+  window.location.href = 'portal.html';
+}
+
+function resetAI() {
+  document.getElementById('ai-messages').innerHTML = '<div class="ai-bubble">Hello, Alex! I\'m connected to Meridian Bank\'s self-service ecosystem. What can I help you with today?</div>';
+  document.getElementById('ai-starters').style.display = '';
+  aiFlowActive = false;
+}
+</script>
+</body>
+</html>

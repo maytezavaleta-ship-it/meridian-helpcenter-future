@@ -6,928 +6,103 @@
 <title>Meridian Bank — Help Center of the Future</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
-
-  /* TOP NAV */
+  body{font-family:'Inter',system-ui,sans-serif;background:#f0fdf4;color:#0f172a;min-height:100vh}
   .topnav{background:#052e16;color:#fff;display:flex;align-items:center;gap:0;padding:0 24px;height:52px;position:sticky;top:0;z-index:100}
   .topnav-brand{font-weight:700;font-size:15px;color:#6ee7b7;margin-right:32px;display:flex;align-items:center;gap:8px;white-space:nowrap}
   .topnav-brand span{font-size:20px}
   .topnav-links{display:flex;gap:2px;flex:1}
-  .nav-btn{background:none;border:none;color:#a7f3d0;padding:0 16px;height:52px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s}
+  .nav-btn{background:none;border:none;color:#a7f3d0;padding:0 16px;height:52px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
   .nav-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
   .nav-btn.active{color:#fff;border-bottom-color:#34d399;background:rgba(52,211,153,.1)}
-  .nav-overview{margin-left:auto;color:#6ee7b7;font-size:12px;cursor:pointer;background:none;border:1px solid #166534;padding:6px 12px;border-radius:6px;transition:all .15s}
-  .nav-overview:hover{background:#166534;color:#fff}
+  .nav-label{margin-left:auto;color:#6ee7b7;font-size:11px;white-space:nowrap}
 
-  /* VIEW CONTAINERS */
-  .view{display:none;min-height:calc(100vh - 52px)}
-  .view.active{display:block}
-
-  /* ===== OVERVIEW VIEW ===== */
-  #view-overview{background:#f0fdf4;display:flex;align-items:center;justify-content:center;padding:48px 24px}
-  .overview-wrap{max-width:900px;width:100%;text-align:center}
-  .overview-title{font-size:28px;font-weight:700;color:#052e16;margin-bottom:8px}
-  .overview-sub{color:#166534;font-size:15px;margin-bottom:48px}
-  .ecosystem-map{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;margin-bottom:40px}
-  .eco-zone{background:#fff;border:2px solid #d1fae5;border-radius:16px;padding:24px 20px;text-align:center;position:relative}
+  .overview-wrap{max-width:900px;width:100%;margin:0 auto;padding:48px 24px;text-align:center}
+  .overview-title{font-size:32px;font-weight:800;color:#052e16;margin-bottom:8px}
+  .overview-sub{color:#166534;font-size:16px;margin-bottom:48px}
+  .eco-arc-label{color:#059669;font-size:12px;text-align:center;margin-bottom:12px;font-weight:600}
+  .studio-banner{background:#052e16;border-radius:12px;padding:12px 24px;margin-bottom:28px;max-width:600px;margin-left:auto;margin-right:auto;text-align:center}
+  .studio-banner span{color:#6ee7b7;font-size:13px;font-weight:600}
+  .ecosystem-map{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;margin-bottom:32px}
+  .eco-zone{background:#fff;border:2px solid #d1fae5;border-radius:16px;padding:24px 20px;text-align:center;text-decoration:none;color:inherit;transition:all .2s;display:block}
+  .eco-zone:hover{border-color:#059669;box-shadow:0 4px 20px rgba(5,150,105,.15);transform:translateY(-2px)}
   .eco-zone.active-zone{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150,105,.08)}
   .eco-zone-icon{font-size:32px;margin-bottom:8px}
   .eco-zone-title{font-weight:700;font-size:14px;color:#052e16;margin-bottom:4px}
   .eco-zone-desc{font-size:12px;color:#166534;line-height:1.5}
+  .eco-zone-cta{margin-top:12px;font-size:11px;color:#059669;font-weight:600}
   .eco-arrow{font-size:24px;color:#059669;text-align:center;padding:0 8px}
-  .eco-studio{background:#052e16;border-radius:16px;padding:20px 32px;margin:0 auto;max-width:420px;color:#fff;display:flex;align-items:center;gap:16px}
-  .eco-studio-icon{font-size:28px}
-  .eco-studio-text strong{display:block;font-size:14px;color:#6ee7b7;margin-bottom:4px}
-  .eco-studio-text span{font-size:12px;color:#a7f3d0;line-height:1.5}
-  .eco-arc{color:#059669;font-size:12px;text-align:center;margin-bottom:12px;font-weight:500}
-  .overview-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
-  .cta-btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+  .info-cards{display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  .info-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-size:12px;color:#334155;text-align:left;max-width:260px}
+  .info-card strong{display:block;font-weight:700;color:#0f172a;margin-bottom:6px}
+  .overview-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+  .cta-btn{padding:11px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;text-decoration:none;display:inline-block}
   .cta-btn.primary{background:#059669;color:#fff}
   .cta-btn.primary:hover{background:#047857}
   .cta-btn.secondary{background:#fff;color:#059669;border:1.5px solid #059669}
   .cta-btn.secondary:hover{background:#f0fdf4}
-
-  /* ===== AI INTERFACE VIEW ===== */
-  #view-ai{background:#fff;display:flex;flex-direction:column;height:calc(100vh - 52px)}
-  .ai-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
-  .ai-header-left{display:flex;align-items:center;gap:12px}
-  .ai-logo{width:32px;height:32px;background:#052e16;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6ee7b7;font-weight:700;font-size:13px}
-  .ai-header-title{font-weight:600;font-size:15px;color:#0f172a}
-  .ai-header-sub{font-size:11px;color:#059669;font-weight:500}
-  .ai-routing-badge{background:#f0fdf4;border:1px solid #6ee7b7;color:#059669;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
-  .ai-routing-badge:hover{background:#d1fae5}
-  .ai-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;max-width:760px;width:100%;margin:0 auto}
-  .ai-bubble{max-width:88%;padding:12px 16px;border-radius:4px 14px 14px 14px;font-size:14px;line-height:1.6;background:#f8fafc;border:1px solid #e2e8f0;color:#0f172a}
-  .ai-bubble.user{background:#1e293b;color:#fff;border:none;border-radius:14px 4px 14px 14px;align-self:flex-end;margin-left:auto}
-  .typing-indicator{display:flex;gap:4px;padding:14px 18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px 14px 14px 14px;width:fit-content}
-  .typing-dot{width:7px;height:7px;border-radius:50%;background:#94a3b8;animation:bounce .9s infinite}
-  .typing-dot:nth-child(2){animation-delay:.2s}
-  .typing-dot:nth-child(3){animation-delay:.4s}
-  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-  .account-card{background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:12px;padding:16px;margin-top:8px}
-  .account-card-title{font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
-  .account-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d1fae5;font-size:13px}
-  .account-row:last-child{border-bottom:none}
-  .account-row .label{color:#166534}
-  .account-row .amount{font-weight:700;color:#052e16}
-  .success-label{color:#059669;font-size:12px;font-weight:600;margin-top:10px;display:flex;align-items:center;gap:5px}
-  .routing-card{border:1.5px solid #059669;border-radius:12px;padding:16px;margin-top:8px;background:#fff}
-  .routing-card-title{font-weight:700;font-size:13px;color:#052e16;margin-bottom:3px}
-  .routing-card-sub{font-size:12px;color:#166534;margin-bottom:12px}
-  .routing-card-btn{background:#059669;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
-  .routing-card-btn:hover{background:#047857}
-  .routing-card-btn.human{background:#1e293b}
-  .routing-card-btn.human:hover{background:#0f172a}
-  .routing-rule-label{font-size:11px;color:#94a3b8;margin-top:10px;display:flex;align-items:center;gap:4px}
-  .verify-card{background:#fefce8;border:1.5px solid #fbbf24;border-radius:12px;padding:14px;margin-top:8px}
-  .verify-card-title{font-size:12px;font-weight:700;color:#92400e;margin-bottom:8px}
-  .verify-steps{font-size:12px;color:#78350f;line-height:1.8}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .chip{background:#f0fdf4;border:1px solid #6ee7b7;color:#059669;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
-  .chip:hover{background:#d1fae5;border-color:#059669}
-  .ai-starters{padding:16px 24px 20px;border-top:1px solid #f1f5f9;max-width:760px;width:100%;margin:0 auto}
-  .starters-label{font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-  .starters-grid{display:flex;gap:10px;flex-wrap:wrap}
-  .starter-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#334155;cursor:pointer;transition:all .15s;flex:1;min-width:200px;line-height:1.4}
-  .starter-card:hover{border-color:#059669;color:#052e16;background:#f0fdf4}
-
-  /* ===== PORTAL VIEW ===== */
-  #view-portal{background:#f8fafc}
-  .portal-header{background:#052e16;color:#fff;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
-  .portal-logo{font-weight:700;font-size:17px;color:#6ee7b7;display:flex;align-items:center;gap:10px}
-  .portal-logo-icon{width:34px;height:34px;background:#059669;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
-  .portal-nav{display:flex;gap:24px}
-  .portal-nav a{color:#a7f3d0;font-size:13px;text-decoration:none}
-  .portal-nav a:hover{color:#fff}
-  .portal-auth-btn{background:#059669;color:#fff;border:none;padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
-  .portal-auth-btn:hover{background:#047857}
-  .referred-banner{background:#0d9488;color:#fff;text-align:center;padding:10px 24px;font-size:13px;font-weight:500;display:none}
-  .referred-banner.show{display:block}
-
-  /* Unauth portal */
-  .portal-unauth{padding:0}
-  .portal-hero{background:linear-gradient(135deg,#052e16 0%,#065f46 60%,#059669 100%);color:#fff;padding:56px 32px;text-align:center}
-  .portal-hero h1{font-size:32px;font-weight:800;margin-bottom:12px}
-  .portal-hero p{font-size:16px;color:#a7f3d0;max-width:520px;margin:0 auto 32px}
-  .mortgage-cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:8px}
-  .mortgage-card{background:#fff;border-radius:12px;padding:20px;width:200px;text-align:center;cursor:pointer;transition:all .2s}
-  .mortgage-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
-  .mortgage-card.featured{border:2px solid #34d399}
-  .mortgage-type{font-size:12px;color:#166534;font-weight:700;text-transform:uppercase;margin-bottom:6px}
-  .mortgage-rate{font-size:28px;font-weight:800;color:#052e16;margin-bottom:4px}
-  .mortgage-label{font-size:11px;color:#6b7280}
-  .mortgage-featured-badge{background:#059669;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:8px;display:inline-block}
-  .portal-content{padding:32px}
-  .portal-ai-nudge{background:#fff;border:1.5px solid #d1fae5;border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;max-width:640px;margin:0 auto 32px;cursor:pointer;transition:all .15s}
-  .portal-ai-nudge:hover{border-color:#059669;background:#f0fdf4}
-  .nudge-icon{width:40px;height:40px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .nudge-text strong{display:block;font-size:14px;color:#052e16;margin-bottom:3px}
-  .nudge-text span{font-size:12px;color:#166534}
-  .portal-mini-ai{background:#fff;border:1.5px solid #6ee7b7;border-radius:16px;padding:20px;max-width:640px;margin:0 auto 24px;display:none}
-  .portal-mini-ai.show{display:block}
-  .mini-ai-msg{background:#f0fdf4;border-radius:10px;padding:12px 14px;font-size:13px;color:#052e16;line-height:1.6;margin-bottom:12px}
-  .portal-footer{background:#052e16;color:#a7f3d0;text-align:center;padding:16px;font-size:12px;margin-top:40px}
-  .portal-footer strong{color:#6ee7b7}
-
-  /* Auth portal */
-  .portal-auth{display:none;padding:0}
-  .portal-auth.show{display:block}
-  .portal-unauth-wrap{display:block}
-  .portal-unauth-wrap.hide{display:none}
-  .auth-layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:calc(100vh - 112px)}
-  .auth-main{padding:28px 32px;background:#f8fafc;overflow-y:auto}
-  .auth-welcome{font-size:22px;font-weight:700;color:#052e16;margin-bottom:4px}
-  .auth-welcome-sub{font-size:13px;color:#166534;margin-bottom:24px}
-  .accounts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-  .acct-tile{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px}
-  .acct-tile-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;margin-bottom:4px}
-  .acct-tile-amount{font-size:22px;font-weight:800;color:#052e16}
-  .acct-tile-change{font-size:11px;color:#059669;margin-top:3px}
-  .section-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:12px}
-  .transactions{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:20px}
-  .tx-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f1f5f9}
-  .tx-row:last-child{border-bottom:none}
-  .tx-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-  .tx-name{font-size:13px;font-weight:600;color:#0f172a}
-  .tx-date{font-size:11px;color:#94a3b8}
-  .tx-amount{font-size:13px;font-weight:700;margin-left:auto}
-  .tx-amount.credit{color:#059669}
-  .tx-amount.debit{color:#ef4444}
-  .promo-card{background:linear-gradient(135deg,#052e16,#065f46);color:#fff;border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center}
-  .promo-text strong{display:block;font-size:15px;margin-bottom:4px}
-  .promo-text span{font-size:12px;color:#a7f3d0}
-  .promo-btn{background:#34d399;color:#052e16;border:none;padding:8px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer}
-
-  /* Agent Zone */
-  .agent-zone{background:#fff;border-left:1.5px solid #d1fae5;padding:20px;overflow-y:auto;position:sticky;top:52px;height:calc(100vh - 112px)}
-  .az-header{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0fdf4}
-  .az-icon{width:28px;height:28px;background:#059669;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
-  .az-title{font-weight:700;font-size:14px;color:#052e16}
-  .az-subtitle{font-size:11px;color:#166534}
-  .az-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-  .az-card{background:#f0fdf4;border:1px solid #d1fae5;border-radius:10px;padding:14px}
-  .az-card-label{font-size:10px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-  .az-card-content{font-size:13px;color:#052e16;line-height:1.5}
-  .az-card.alert{background:#fefce8;border-color:#fbbf24}
-  .az-card.alert .az-card-label{color:#d97706}
-  .az-card.review{background:#eff6ff;border-color:#bfdbfe}
-  .az-card.review .az-card-label{color:#1d4ed8}
-  .sparkline{height:28px;margin-top:8px}
-  .az-cta{background:#059669;color:#fff;border:none;width:100%;padding:9px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px;transition:all .15s}
-  .az-cta:hover{background:#047857}
-  .az-input-wrap{margin-top:16px;padding-top:16px;border-top:1px solid #d1fae5}
-  .az-input-label{font-size:11px;color:#94a3b8;margin-bottom:6px}
-  .az-input{width:100%;border:1.5px solid #d1fae5;border-radius:8px;padding:8px 12px;font-size:13px;color:#0f172a;outline:none;background:#f8fafc}
-  .az-input:focus{border-color:#059669}
-  .az-handoff-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:16px;display:none}
-  .az-handoff-card.show{display:block}
-  .az-handoff-title{font-size:12px;font-weight:700;color:#334155;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-  .az-agent-info{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .az-agent-avatar{width:36px;height:36px;background:#1e293b;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
-  .az-agent-name{font-size:13px;font-weight:700;color:#0f172a}
-  .az-agent-role{font-size:11px;color:#64748b}
-  .az-human-btn{background:#1e293b;color:#fff;border:none;width:100%;padding:9px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
-  .az-human-label{font-size:10px;color:#94a3b8;text-align:center;margin-top:6px}
-
-  /* ===== STUDIO VIEW ===== */
-  #view-studio{background:#f8fafc;padding:28px 32px}
-  .studio-header{margin-bottom:24px}
-  .studio-title{font-size:22px;font-weight:800;color:#0f172a;margin-bottom:3px}
-  .studio-sub{font-size:13px;color:#64748b}
-  .studio-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .studio-panel{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:20px}
-  .studio-panel-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:3px}
-  .studio-panel-sub{font-size:12px;color:#64748b;margin-bottom:16px}
-  .action-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;margin-bottom:4px;border:1.5px solid transparent;transition:all .15s}
-  .action-row:hover{background:#f8fafc}
-  .action-row.wire-highlight{border-color:#fbbf24;background:#fffbeb}
-  .action-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:#f1f5f9}
-  .action-name{font-size:13px;font-weight:600;color:#0f172a;flex:1}
-  .seg-btn{display:flex;border:1.5px solid #e2e8f0;border-radius:7px;overflow:hidden;flex-shrink:0}
-  .seg-opt{padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b;border:none;transition:all .15s;white-space:nowrap}
-  .seg-opt:hover{background:#f8fafc}
-  .seg-opt.active-ai{background:#d1fae5;color:#059669}
-  .seg-opt.active-portal{background:#dbeafe;color:#1d4ed8}
-  .seg-opt.active-human{background:#fee2e2;color:#dc2626}
-  .seg-divider{width:1px;background:#e2e8f0}
-  .mcp-section{margin-top:20px;padding-top:16px;border-top:1.5px solid #f1f5f9}
-  .mcp-title{font-size:12px;font-weight:700;color:#334155;margin-bottom:12px;display:flex;align-items:center;gap:6px;justify-content:space-between}
-  .mcp-add-btn{background:#f8fafc;border:1px solid #e2e8f0;color:#059669;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer}
-  .mcp-row{display:flex;align-items:center;gap:8px;padding:8px;background:#f8fafc;border-radius:8px;margin-bottom:6px;font-size:12px;color:#334155}
-  .mcp-row-name{flex:1;font-weight:500}
-  .mcp-toggle{width:28px;height:16px;border-radius:8px;background:#059669;position:relative;cursor:pointer;flex-shrink:0}
-  .mcp-toggle::after{content:'';position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .15s}
-  .mcp-tag{font-size:10px;background:#d1fae5;color:#059669;padding:2px 7px;border-radius:10px;font-weight:600}
-  .insight-card{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px}
-  .insight-article{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:3px}
-  .insight-stat{font-size:11px;color:#64748b;margin-bottom:10px}
-  .insight-actions{display:flex;gap:8px}
-  .insight-btn{font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;cursor:pointer;border:1.5px solid;transition:all .15s}
-  .insight-btn.publish{border-color:#059669;color:#059669;background:#fff}
-  .insight-btn.publish:hover{background:#f0fdf4}
-  .insight-btn.publish.done{background:#d1fae5;color:#065f46;border-color:#6ee7b7;cursor:default}
-  .insight-btn.mcp{border-color:#1d4ed8;color:#1d4ed8;background:#fff}
-  .insight-btn.mcp:hover{background:#eff6ff}
-  .insight-btn.mcp.done{background:#dbeafe;color:#1e40af;border-color:#93c5fd;cursor:default}
-  .handoff-preview{background:#0f172a;border-radius:12px;padding:20px;font-family:'Courier New',monospace;font-size:12px;color:#94a3b8;line-height:1.9}
-  .handoff-preview .hp-header{color:#e2e8f0;font-weight:700;border-bottom:1px solid #334155;padding-bottom:8px;margin-bottom:12px;font-family:system-ui}
-  .handoff-preview .hp-section{color:#6ee7b7;margin-top:10px;margin-bottom:4px;font-family:system-ui;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-  .handoff-preview .hp-item{color:#cbd5e1}
-  .handoff-preview .hp-suggestion{margin-top:12px;background:#1e293b;border-left:3px solid #34d399;padding:10px 12px;border-radius:0 8px 8px 0;color:#e2e8f0;font-family:system-ui;font-size:12px;line-height:1.6}
-  .handoff-preview .hp-label{font-size:10px;color:#475569;margin-top:12px;font-family:system-ui;text-align:right}
-
-  /* TOAST */
-  .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
-  .toast.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
 <nav class="topnav">
   <div class="topnav-brand"><span>🏦</span> Meridian Bank</div>
   <div class="topnav-links">
-    <button class="nav-btn active" onclick="showView('overview')">Overview</button>
-    <button class="nav-btn" onclick="showView('ai')">AI Interface</button>
-    <button class="nav-btn" onclick="showView('portal')">Customer Portal</button>
-    <button class="nav-btn" onclick="showView('studio')">Self-Service Studio</button>
+    <a href="index.html" class="nav-btn active">Overview</a>
+    <a href="ai.html" class="nav-btn">AI Interface</a>
+    <a href="portal.html" class="nav-btn">Customer Portal</a>
+    <a href="studio.html" class="nav-btn">Self-Service Studio</a>
   </div>
-  <button class="nav-overview" onclick="showView('overview')">← Overview</button>
+  <div class="nav-label">Help Center of the Future — Leadership Demo</div>
 </nav>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+<div class="overview-wrap">
+  <div class="overview-title">Help Center of the Future</div>
+  <div class="overview-sub">Meridian Bank's self-service ecosystem — configured once, optimized for humans and AI agents</div>
 
-<!-- ============================================================ -->
-<!-- VIEW: OVERVIEW -->
-<!-- ============================================================ -->
-<div class="view active" id="view-overview">
-  <div class="overview-wrap">
-    <div class="overview-title">Help Center of the Future</div>
-    <div class="overview-sub">Meridian Bank's self-service ecosystem — configured once, optimized for humans and AI agents</div>
+  <div class="eco-arc-label">⚙️ Self-Service Studio — the configuration layer for everything below</div>
+  <div class="studio-banner">
+    <span>🏦 Meridian configures routing rules, MCP actions, and portal content — all in one place</span>
+  </div>
 
-    <div class="eco-arc">⚙️ Self-Service Studio — the configuration layer for everything below</div>
-    <div style="background:#052e16;border-radius:12px;padding:12px 24px;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto;text-align:center">
-      <span style="color:#6ee7b7;font-size:13px;font-weight:600">🏦 Meridian configures routing rules, MCP actions, and portal content — all in one place</span>
+  <div class="ecosystem-map">
+    <a href="ai.html" class="eco-zone active-zone">
+      <div class="eco-zone-icon">🤖</div>
+      <div class="eco-zone-title">In-AI Zone</div>
+      <div class="eco-zone-desc">High-confidence single actions executed directly in any AI assistant via MCP</div>
+      <div class="eco-zone-cta">↓ Click to explore</div>
+    </a>
+    <div class="eco-arrow">→</div>
+    <a href="portal.html" class="eco-zone">
+      <div class="eco-zone-icon">🌐</div>
+      <div class="eco-zone-title">Portal Zone</div>
+      <div class="eco-zone-desc">Discovery, comparison & browsing — optimized for humans and AI agents alike</div>
+      <div class="eco-zone-cta" style="color:#1d4ed8">↓ Click to explore</div>
+    </a>
+    <div class="eco-arrow">→</div>
+    <a href="portal.html" class="eco-zone">
+      <div class="eco-zone-icon">👤</div>
+      <div class="eco-zone-title">Human Zone</div>
+      <div class="eco-zone-desc">High-stakes irreversible actions requiring human verification and specialist oversight</div>
+      <div class="eco-zone-cta" style="color:#dc2626">↓ See in portal</div>
+    </a>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <strong>🔁 Contact Center ↔ Portal</strong>
+      KB articles surfaced in the console → promoted to portal + MCP. Customer portal sessions → agent case summaries. Bidirectional, automatic.
     </div>
-
-    <div class="ecosystem-map">
-      <div class="eco-zone active-zone" onclick="showView('ai')" style="cursor:pointer">
-        <div class="eco-zone-icon">🤖</div>
-        <div class="eco-zone-title">In-AI Zone</div>
-        <div class="eco-zone-desc">High-confidence single actions executed directly in any AI assistant via MCP</div>
-        <div style="margin-top:12px;font-size:11px;color:#059669;font-weight:600">↓ Click to explore</div>
-      </div>
-      <div class="eco-arrow">→</div>
-      <div class="eco-zone" onclick="showView('portal')" style="cursor:pointer">
-        <div class="eco-zone-icon">🌐</div>
-        <div class="eco-zone-title">Portal Zone</div>
-        <div class="eco-zone-desc">Discovery, comparison & browsing — optimized for humans and AI agents alike</div>
-        <div style="margin-top:12px;font-size:11px;color:#1d4ed8;font-weight:600">↓ Click to explore</div>
-      </div>
-      <div class="eco-arrow">→</div>
-      <div class="eco-zone" onclick="showView('portal')" style="cursor:pointer">
-        <div class="eco-zone-icon">👤</div>
-        <div class="eco-zone-title">Human Zone</div>
-        <div class="eco-zone-desc">High-stakes irreversible actions requiring human verification and specialist oversight</div>
-        <div style="margin-top:12px;font-size:11px;color:#dc2626;font-weight:600">↓ See in portal</div>
-      </div>
+    <div class="info-card">
+      <strong>⚙️ AEO + GEO Ready</strong>
+      Help content is structured for Generative Engine Optimization. Every action is exposed as an MCP tool. AI assistants can execute — not just answer.
     </div>
+  </div>
 
-    <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap">
-      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-size:12px;color:#334155;text-align:left;max-width:260px">
-        <div style="font-weight:700;color:#0f172a;margin-bottom:6px">🔁 Contact Center ↔ Portal</div>
-        KB articles surfaced in the console → promoted to portal + MCP. Customer portal sessions → agent case summaries. Bidirectional, automatic.
-      </div>
-      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-size:12px;color:#334155;text-align:left;max-width:260px">
-        <div style="font-weight:700;color:#0f172a;margin-bottom:6px">⚙️ AEO + GEO Ready</div>
-        Help content is structured for Generative Engine Optimization. Every action is exposed as an MCP tool. AI assistants can execute — not just answer.
-      </div>
-    </div>
-
-    <div class="overview-cta">
-      <button class="cta-btn primary" onclick="showView('ai')">Start: AI Interface →</button>
-      <button class="cta-btn secondary" onclick="showView('studio')">See Configuration Studio</button>
-    </div>
+  <div class="overview-cta">
+    <a href="ai.html" class="cta-btn primary">Start: AI Interface →</a>
+    <a href="studio.html" class="cta-btn secondary">See Configuration Studio</a>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- VIEW: AI INTERFACE -->
-<!-- ============================================================ -->
-<div class="view" id="view-ai">
-  <div class="ai-header">
-    <div class="ai-header-left">
-      <div class="ai-logo">AI</div>
-      <div>
-        <div class="ai-header-title">AI Assistant</div>
-        <div class="ai-header-sub">Powered by Meridian Bank Self-Service</div>
-      </div>
-    </div>
-    <button class="ai-routing-badge" onclick="showView('studio')">⚙️ Routing Config</button>
-  </div>
-
-  <div class="ai-messages" id="ai-messages">
-    <div class="ai-bubble">
-      Hello, Alex! I'm connected to Meridian Bank's self-service ecosystem. I can check your accounts, help you explore products, or connect you with a specialist — all based on what you need. What can I help you with today?
-    </div>
-  </div>
-
-  <div class="ai-starters" id="ai-starters">
-    <div class="starters-label">Suggested actions</div>
-    <div class="starters-grid">
-      <div class="starter-card" onclick="runFlow('balance')">💰 What's my account balance?</div>
-      <div class="starter-card" onclick="runFlow('mortgage')">🏠 I want to explore refinancing my mortgage</div>
-      <div class="starter-card" onclick="runFlow('wire')">📤 I need to wire $8,000 to escrow</div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- VIEW: CUSTOMER PORTAL -->
-<!-- ============================================================ -->
-<div class="view" id="view-portal">
-  <div class="portal-header">
-    <div class="portal-logo"><div class="portal-logo-icon">M</div> Meridian Bank</div>
-    <nav class="portal-nav">
-      <a href="#">Accounts</a>
-      <a href="#">Mortgages</a>
-      <a href="#">Investments</a>
-      <a href="#">Support</a>
-    </nav>
-    <button class="portal-auth-btn" id="portal-auth-btn" onclick="togglePortalAuth()">Sign In</button>
-  </div>
-
-  <!-- Referred banner -->
-  <div class="referred-banner" id="referred-banner">
-    🤖 Referred from your AI assistant — continuing your mortgage inquiry
-  </div>
-
-  <!-- UNAUTHENTICATED STATE -->
-  <div class="portal-unauth-wrap" id="portal-unauth">
-    <div class="portal-hero">
-      <h1>Find the right mortgage for you</h1>
-      <p>Compare current Meridian rates and see which option fits your financial picture.</p>
-      <div class="mortgage-cards">
-        <div class="mortgage-card featured">
-          <div class="mortgage-type">15-Year Fixed</div>
-          <div class="mortgage-rate">5.9%</div>
-          <div class="mortgage-label">APR 6.1%</div>
-          <div class="mortgage-featured-badge">★ Best Value</div>
-        </div>
-        <div class="mortgage-card">
-          <div class="mortgage-type">30-Year Fixed</div>
-          <div class="mortgage-rate">6.4%</div>
-          <div class="mortgage-label">APR 6.6%</div>
-        </div>
-        <div class="mortgage-card">
-          <div class="mortgage-type">5/1 ARM</div>
-          <div class="mortgage-rate">5.1%</div>
-          <div class="mortgage-label">APR 5.4% · adjusts year 6</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="portal-content">
-      <div class="portal-ai-nudge" id="ai-nudge-trigger" onclick="showMiniAI()">
-        <div class="nudge-icon">✦</div>
-        <div class="nudge-text">
-          <strong>Need help deciding?</strong>
-          <span>Ask your Meridian AI — get a personalized recommendation in seconds</span>
-        </div>
-        <div style="color:#059669;font-size:18px">›</div>
-      </div>
-
-      <div class="portal-mini-ai" id="portal-mini-ai">
-        <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">✦ Meridian AI</div>
-        <div class="mini-ai-msg">
-          Based on a typical 20% down payment on a $420,000 home, the <strong>15-year fixed at 5.9%</strong> saves you approximately <strong>$180,000</strong> over the life of the loan compared to the 30-year. Your monthly payment would be ~$2,890 vs ~$2,100. Want me to run your specific numbers?
-        </div>
-        <div class="chips">
-          <div class="chip" onclick="togglePortalAuth()">Sign in to see my personalized rate</div>
-          <div class="chip">Run the numbers with my income</div>
-          <div class="chip">What do I need to qualify?</div>
-        </div>
-      </div>
-
-      <div style="text-align:center;color:#94a3b8;font-size:12px;margin-top:16px;padding:12px;background:#f8fafc;border-radius:8px;max-width:640px;margin:16px auto 0">
-        <span style="color:#059669;font-weight:600">Optimized for AI agents and humans.</span> &nbsp;MCP endpoint: <code style="background:#e2e8f0;padding:1px 5px;border-radius:3px">meridianbank.com/api/mcp</code>
-      </div>
-    </div>
-    <div class="portal-footer">
-      <strong>Meridian Bank</strong> · FDIC Insured · Equal Housing Lender · © 2025
-    </div>
-  </div>
-
-  <!-- AUTHENTICATED STATE -->
-  <div class="portal-auth" id="portal-auth">
-    <div class="auth-layout">
-      <div class="auth-main">
-        <div class="auth-welcome">Good afternoon, Alex.</div>
-        <div class="auth-welcome-sub">Here's your financial snapshot — Nov 17, 2025</div>
-
-        <div class="accounts-grid">
-          <div class="acct-tile">
-            <div class="acct-tile-label">Checking</div>
-            <div class="acct-tile-amount">$12,400</div>
-            <div class="acct-tile-change">↑ +$2,100 this month</div>
-          </div>
-          <div class="acct-tile">
-            <div class="acct-tile-label">Savings</div>
-            <div class="acct-tile-amount">$31,200</div>
-            <div class="acct-tile-change">↑ 4.8% APY</div>
-          </div>
-          <div class="acct-tile">
-            <div class="acct-tile-label">Credit Available</div>
-            <div class="acct-tile-amount">$4,200</div>
-            <div class="acct-tile-change" style="color:#64748b">of $8,000 limit</div>
-          </div>
-        </div>
-
-        <div class="section-title">Recent Transactions</div>
-        <div class="transactions">
-          <div class="tx-row">
-            <div class="tx-icon" style="background:#fef9c3">🛒</div>
-            <div><div class="tx-name">Whole Foods Market</div><div class="tx-date">Nov 16</div></div>
-            <div class="tx-amount debit">-$87.42</div>
-          </div>
-          <div class="tx-row">
-            <div class="tx-icon" style="background:#d1fae5">💼</div>
-            <div><div class="tx-name">Direct Deposit — Employer</div><div class="tx-date">Nov 15</div></div>
-            <div class="tx-amount credit">+$4,200.00</div>
-          </div>
-          <div class="tx-row">
-            <div class="tx-icon" style="background:#ffe4e6">🏠</div>
-            <div><div class="tx-name">Mortgage Payment</div><div class="tx-date">Nov 14</div></div>
-            <div class="tx-amount debit">-$2,340.00</div>
-          </div>
-          <div class="tx-row">
-            <div class="tx-icon" style="background:#ede9fe">⚡</div>
-            <div><div class="tx-name">Pacific Gas & Electric</div><div class="tx-date">Nov 12</div></div>
-            <div class="tx-amount debit">-$124.18</div>
-          </div>
-        </div>
-
-        <div class="promo-card">
-          <div class="promo-text">
-            <strong>Put your $12,400 to work</strong>
-            <span>Move to a Meridian High-Yield account and earn 4.8% APY — that's $595/year.</span>
-          </div>
-          <button class="promo-btn">Learn More</button>
-        </div>
-      </div>
-
-      <!-- AGENT ZONE -->
-      <div class="agent-zone">
-        <div class="az-header">
-          <div class="az-icon">✦</div>
-          <div>
-            <div class="az-title">Your Meridian Agent</div>
-            <div class="az-subtitle">Personalized insights, ready now</div>
-          </div>
-        </div>
-
-        <div class="az-cards" id="az-cards">
-          <div class="az-card">
-            <div class="az-card-label">📈 Balance Trend</div>
-            <div class="az-card-content">Your checking is up $2,100 this month — highest since March.</div>
-            <svg class="sparkline" viewBox="0 0 200 28" preserveAspectRatio="none">
-              <polyline points="0,24 30,20 60,22 90,16 120,12 150,8 180,6 200,4" fill="none" stroke="#059669" stroke-width="2" stroke-linejoin="round"/>
-              <polyline points="0,24 30,20 60,22 90,16 120,12 150,8 180,6 200,4 200,28 0,28" fill="rgba(5,150,105,.1)" stroke="none"/>
-            </svg>
-          </div>
-          <div class="az-card alert">
-            <div class="az-card-label">⚡ Rate Alert</div>
-            <div class="az-card-content">15-yr fixed dropped to <strong>5.9%</strong>. Based on your home value, your break-even vs. 30-yr is <strong>3.1 years</strong>.</div>
-            <button class="az-cta" style="margin-top:10px;background:#d97706" onclick="showMortgageHandoff()">Apply for 15-yr Mortgage</button>
-          </div>
-          <div class="az-card review">
-            <div class="az-card-label">📋 Application Update</div>
-            <div class="az-card-content">Your mortgage application from Oct 12 is under review. Estimated decision: Nov 22.</div>
-          </div>
-        </div>
-
-        <div class="az-handoff-card" id="az-handoff">
-          <div class="az-handoff-title">👤 Handing off to a specialist</div>
-          <div style="font-size:12px;color:#334155;margin-bottom:12px">Loan applications require your signature and ID verification. I'll connect you with a Meridian home lending specialist.</div>
-          <div class="az-agent-info">
-            <div class="az-agent-avatar">MT</div>
-            <div>
-              <div class="az-agent-name">Marcus T.</div>
-              <div class="az-agent-role">Home Lending Specialist · Available now</div>
-            </div>
-          </div>
-          <button class="az-human-btn">Start Secure Session →</button>
-          <div class="az-human-label">👤 Human zone: Loan application signing</div>
-        </div>
-
-        <div class="az-input-wrap">
-          <div class="az-input-label">Ask me anything about your accounts</div>
-          <input class="az-input" type="text" placeholder="e.g. What's my credit utilization?" />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- VIEW: SELF-SERVICE STUDIO -->
-<!-- ============================================================ -->
-<div class="view" id="view-studio">
-  <div class="studio-header">
-    <div class="studio-title">🏦 Meridian Self-Service Studio</div>
-    <div class="studio-sub">Help Center Configuration — configure routing, MCP actions, and content promotion in one place</div>
-  </div>
-
-  <div class="studio-layout">
-    <!-- LEFT: ACTION LIBRARY -->
-    <div>
-      <div class="studio-panel" style="margin-bottom:20px">
-        <div class="studio-panel-title">Action Routing Rules</div>
-        <div class="studio-panel-sub">Configure where each customer action is handled</div>
-
-        <div id="action-rows">
-          <!-- Rows injected by JS -->
-        </div>
-
-        <div class="mcp-section">
-          <div class="mcp-title">
-            <span>🔌 MCP Endpoint Actions</span>
-            <button class="mcp-add-btn">+ Add new action</button>
-          </div>
-          <div id="mcp-rows">
-            <!-- Injected by JS -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGHT: INSIGHTS + HANDOFF -->
-    <div>
-      <div class="studio-panel" style="margin-bottom:20px">
-        <div class="studio-panel-title">🔔 Promote to Self-Service</div>
-        <div class="studio-panel-sub">Knowledge used heavily by agents last 30 days — promote directly to portal or MCP</div>
-        <div id="insight-cards">
-          <!-- Injected by JS -->
-        </div>
-      </div>
-
-      <div class="studio-panel">
-        <div class="studio-panel-title">📋 Portal Session Summary</div>
-        <div class="studio-panel-sub">Sent to agents automatically when a customer escalates from portal</div>
-        <div class="handoff-preview">
-          <div class="hp-header">Customer: Alex Rivera &nbsp;|&nbsp; Session: 14 min &nbsp;|&nbsp; Escalated: 2:34 PM</div>
-          <div class="hp-section">Portal Activity</div>
-          <div class="hp-item">✓ Viewed 4 articles (wire transfer limits ×2, international transfers, fees)</div>
-          <div class="hp-item">✓ Attempted wire transfer — stopped at verification step</div>
-          <div class="hp-item">✓ Tried password reset — unsuccessful after 2 attempts</div>
-          <div class="hp-item">✓ Opened mortgage comparison page — spent 6 min</div>
-          <div class="hp-section">AI Session Transcript (last 3 exchanges)</div>
-          <div class="hp-item">Alex: "I need to wire $8,000 to escrow"</div>
-          <div class="hp-item">Agent: Routing rule applied — Human Required</div>
-          <div class="hp-item">Alex: "Can you help me reset my password?"</div>
-          <div class="hp-item">Agent: Directed to portal reset flow</div>
-          <div class="hp-suggestion">"Hi Alex, I can see you were trying to complete a wire transfer and ran into some trouble with verification. Let me help you get that sorted out."</div>
-          <div class="hp-label">Generated from portal telemetry + AI session context · Zero manual effort</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// ============================================================
-// STATE
-// ============================================================
-window.demoState = {
-  wireTransferRoute: 'human',
-  portalReferredFromAI: false,
-  portalAuthenticated: false,
-  publishedArticles: [],
-  mcpActionsAdded: []
-};
-
-// ============================================================
-// NAV
-// ============================================================
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-' + id).classList.add('active');
-  const idx = {overview:0,ai:1,portal:2,studio:3}[id];
-  if(idx !== undefined) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
-  if(id === 'portal') renderPortal();
-  if(id === 'studio') renderStudio();
-}
-
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// ============================================================
-// AI INTERFACE FLOWS
-// ============================================================
-let aiFlowActive = false;
-
-function addMsg(html, isUser) {
-  const msgs = document.getElementById('ai-messages');
-  const div = document.createElement('div');
-  div.className = 'ai-bubble' + (isUser ? ' user' : '');
-  div.innerHTML = html;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-  return div;
-}
-
-function showTyping(ms) {
-  return new Promise(resolve => {
-    const msgs = document.getElementById('ai-messages');
-    const dot = document.createElement('div');
-    dot.className = 'typing-indicator';
-    dot.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    msgs.appendChild(dot);
-    msgs.scrollTop = msgs.scrollHeight;
-    setTimeout(() => { dot.remove(); resolve(); }, ms);
-  });
-}
-
-function hideStarters() {
-  document.getElementById('ai-starters').style.display = 'none';
-}
-
-async function runFlow(type) {
-  if(aiFlowActive) return;
-  aiFlowActive = true;
-  hideStarters();
-
-  if(type === 'balance') await flowBalance();
-  else if(type === 'mortgage') await flowMortgage();
-  else if(type === 'wire') await flowWire();
-
-  aiFlowActive = false;
-}
-
-async function flowBalance() {
-  addMsg('💰 What\'s my account balance?', true);
-  await showTyping(1200);
-  const div = addMsg(`
-    Here are your current Meridian balances, Alex:
-    <div class="account-card">
-      <div class="account-card-title">Account Summary — Nov 17, 2025</div>
-      <div class="account-row"><span class="label">Checking ···4821</span><span class="amount">$12,400.00</span></div>
-      <div class="account-row"><span class="label">Savings ···7703</span><span class="amount">$31,200.00</span></div>
-      <div class="account-row"><span class="label">Credit Available</span><span class="amount">$4,200.00</span></div>
-      <div class="success-label">✓ Executed in-AI — no portal redirect needed</div>
-    </div>
-    <div class="chips">
-      <div class="chip" onclick="runFlow('transactions')">Show recent transactions</div>
-      <div class="chip" onclick="runFlow('move')">Move money between accounts</div>
-      <div class="chip" onclick="resetAI()">↩ Back to menu</div>
-    </div>
-  `, false);
-}
-
-async function flowMortgage() {
-  addMsg('🏠 I want to explore refinancing my mortgage', true);
-  await showTyping(1500);
-  addMsg(`
-    I can tell you that current 30-year rates at Meridian are <strong>6.4%</strong>, and the 15-year is <strong>5.9%</strong>. To see your personalized options based on your home value and credit profile, I'll open the Meridian portal — it's built for this kind of comparison.
-    <div class="routing-card">
-      <div class="routing-card-title">🌐 Routing to Meridian Portal</div>
-      <div class="routing-card-sub">Discovery &amp; Comparison — optimized for browsing</div>
-      <button class="routing-card-btn" onclick="goToPortalFromAI()">Open Meridian Portal →</button>
-    </div>
-    <div class="routing-rule-label">⚙️ Routing rule: Mortgage inquiry → Portal (configured in Self-Service Studio)</div>
-  `, false);
-}
-
-async function flowWire() {
-  addMsg('📤 I need to wire $8,000 to escrow', true);
-
-  if(window.demoState.wireTransferRoute === 'inai') {
-    await showTyping(1300);
-    addMsg(`
-      I can process this wire for you, Alex. Let me verify your identity first.
-      <div class="verify-card">
-        <div class="verify-card-title">🔐 Identity Verification</div>
-        <div class="verify-steps">
-          ✓ Account ownership confirmed<br>
-          ✓ Device recognized (iPhone 14 · Last used today)<br>
-          ✓ Biometric match — Touch ID
-        </div>
-      </div>
-    `, false);
-    await showTyping(1400);
-    addMsg(`
-      <div class="account-card">
-        <div class="account-card-title">Wire Transfer Queued</div>
-        <div class="account-row"><span class="label">Amount</span><span class="amount">$8,000.00</span></div>
-        <div class="account-row"><span class="label">To</span><span class="amount">Escrow Account #4471</span></div>
-        <div class="account-row"><span class="label">Expected Arrival</span><span class="amount">Nov 18 by 5pm</span></div>
-        <div class="success-label">✓ Wire of $8,000 to Escrow Account #4471 queued for processing</div>
-      </div>
-      <div class="routing-rule-label">⚙️ Routing rule: Wire Transfer → In-AI (updated in Self-Service Studio)</div>
-    `, false);
-  } else {
-    await showTyping(1300);
-    addMsg(`
-      Wire transfers are high-stakes and irreversible. Meridian requires human verification for this action to protect your account.
-      <div class="routing-card">
-        <div class="routing-card-title">👤 Connecting to a Meridian Agent</div>
-        <div class="routing-card-sub">Secure handoff — your session context will be shared with the agent</div>
-        <button class="routing-card-btn human">Start Secure Session →</button>
-      </div>
-      <div class="routing-rule-label">⚙️ Routing rule: Wire Transfer → Human Required (configured in Self-Service Studio)</div>
-      <div class="chips" style="margin-top:12px">
-        <div class="chip" onclick="showView('studio')">Change this in Studio ⚙️</div>
-      </div>
-    `, false);
-  }
-}
-
-function goToPortalFromAI() {
-  window.demoState.portalReferredFromAI = true;
-  showView('portal');
-}
-
-function resetAI() {
-  document.getElementById('ai-messages').innerHTML = '<div class="ai-bubble">Hello, Alex! I\'m connected to Meridian Bank\'s self-service ecosystem. What can I help you with today?</div>';
-  document.getElementById('ai-starters').style.display = '';
-  aiFlowActive = false;
-}
-
-// ============================================================
-// PORTAL
-// ============================================================
-function renderPortal() {
-  const banner = document.getElementById('referred-banner');
-  if(window.demoState.portalReferredFromAI) {
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-
-  if(window.demoState.portalAuthenticated) {
-    document.getElementById('portal-unauth').classList.add('hide');
-    document.getElementById('portal-auth').classList.add('show');
-    document.getElementById('portal-auth-btn').textContent = 'Sign Out';
-  } else {
-    document.getElementById('portal-unauth').classList.remove('hide');
-    document.getElementById('portal-auth').classList.remove('show');
-    document.getElementById('portal-auth-btn').textContent = 'Sign In';
-  }
-}
-
-function togglePortalAuth() {
-  window.demoState.portalAuthenticated = !window.demoState.portalAuthenticated;
-  renderPortal();
-  if(window.demoState.portalAuthenticated) showToast('✓ Signed in as Alex Rivera');
-}
-
-function showMiniAI() {
-  document.getElementById('portal-mini-ai').classList.add('show');
-  document.getElementById('ai-nudge-trigger').style.display = 'none';
-}
-
-function showMortgageHandoff() {
-  document.getElementById('az-handoff').classList.add('show');
-  document.getElementById('az-cards').style.opacity = '0.4';
-  showToast('👤 Handing off to Marcus T. — Home Lending');
-}
-
-// ============================================================
-// STUDIO
-// ============================================================
-const actions = [
-  { id:'balance',     icon:'💰', name:'Account Balance',      route:'inai' },
-  { id:'transactions',icon:'📄', name:'Recent Transactions',   route:'inai' },
-  { id:'freeze',      icon:'🧊', name:'Card Freeze/Unfreeze',  route:'inai' },
-  { id:'mortgage',    icon:'🏠', name:'Mortgage Inquiry',      route:'portal' },
-  { id:'loan-compare',icon:'📊', name:'Loan Comparison',       route:'portal' },
-  { id:'rate-alert',  icon:'⚡', name:'Rate Alerts',           route:'inai' },
-  { id:'wire',        icon:'📤', name:'Wire Transfer',         route:'human', highlight:true },
-  { id:'loan-app',    icon:'📝', name:'Loan Application',      route:'human' },
-  { id:'dispute',     icon:'🚩', name:'Dispute Transaction',   route:'human' },
-];
-
-const mcpBase = ['Account Balance','Recent Transactions','Card Freeze/Unfreeze','Rate Alerts'];
-
-function renderStudio() {
-  renderActionRows();
-  renderMcpRows();
-  renderInsightCards();
-}
-
-function renderActionRows() {
-  const container = document.getElementById('action-rows');
-  container.innerHTML = '';
-  actions.forEach(a => {
-    const row = document.createElement('div');
-    row.className = 'action-row' + (a.highlight ? ' wire-highlight' : '');
-    row.id = 'action-row-' + a.id;
-    row.innerHTML = `
-      <div class="action-icon">${a.icon}</div>
-      <div class="action-name">${a.name}</div>
-      <div class="seg-btn">
-        <button class="seg-opt ${a.route==='inai'?'active-ai':''}" onclick="setRoute('${a.id}','inai')">🤖 In-AI</button>
-        <div class="seg-divider"></div>
-        <button class="seg-opt ${a.route==='portal'?'active-portal':''}" onclick="setRoute('${a.id}','portal')">🌐 Portal</button>
-        <div class="seg-divider"></div>
-        <button class="seg-opt ${a.route==='human'?'active-human':''}" onclick="setRoute('${a.id}','human')">👤 Human</button>
-      </div>
-    `;
-    container.appendChild(row);
-  });
-}
-
-function setRoute(id, route) {
-  const action = actions.find(a => a.id === id);
-  if(!action) return;
-  action.route = route;
-  if(id === 'wire') {
-    window.demoState.wireTransferRoute = route;
-    showToast('⚡ Routing updated. This change is live in your AI interface and MCP endpoint.');
-  } else {
-    showToast(`⚡ ${action.name} → ${route === 'inai' ? 'In-AI' : route === 'portal' ? 'Portal' : 'Human Required'}`);
-  }
-  renderActionRows();
-  renderMcpRows();
-}
-
-function renderMcpRows() {
-  const container = document.getElementById('mcp-rows');
-  container.innerHTML = '';
-  const inaiActions = actions.filter(a => a.route === 'inai').map(a => a.name);
-  const allMcp = [...new Set([...mcpBase.filter(n => inaiActions.includes(n)), ...window.demoState.mcpActionsAdded])];
-
-  allMcp.forEach(name => {
-    const row = document.createElement('div');
-    row.className = 'mcp-row';
-    row.innerHTML = `
-      <div class="mcp-row-name">${name}</div>
-      <div class="mcp-tag">MCP</div>
-      <div class="mcp-toggle" title="Available to external AI agents"></div>
-    `;
-    container.appendChild(row);
-  });
-}
-
-const insights = [
-  { id:'i1', title:'How to dispute a transaction',       stat:'Used by agents 1,247 times last 30 days' },
-  { id:'i2', title:'Understanding wire transfer limits', stat:'Used by agents 893 times last 30 days' },
-  { id:'i3', title:'Mortgage pre-approval checklist',    stat:'Used by agents 741 times last 30 days' },
-];
-
-function renderInsightCards() {
-  const container = document.getElementById('insight-cards');
-  if(container.dataset.rendered) return;
-  container.dataset.rendered = '1';
-
-  insights.forEach(ins => {
-    const card = document.createElement('div');
-    card.className = 'insight-card';
-    card.id = 'ins-' + ins.id;
-    card.innerHTML = `
-      <div class="insight-article">${ins.title}</div>
-      <div class="insight-stat">${ins.stat}</div>
-      <div class="insight-actions">
-        <button class="insight-btn publish" id="pub-${ins.id}" onclick="publishArticle('${ins.id}','${ins.title}')">Publish to Portal →</button>
-        <button class="insight-btn mcp" id="mcp-${ins.id}" onclick="addMcpFromInsight('${ins.id}','${ins.title}')">Create MCP Action →</button>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-function publishArticle(id, title) {
-  const btn = document.getElementById('pub-' + id);
-  btn.textContent = '✓ Published — live on portal';
-  btn.className = 'insight-btn publish done';
-  if(!window.demoState.publishedArticles.includes(title)) window.demoState.publishedArticles.push(title);
-  showToast(`✓ "${title.substring(0,30)}..." published to portal`);
-}
-
-function addMcpFromInsight(id, title) {
-  const btn = document.getElementById('mcp-' + id);
-  btn.textContent = '✓ Added to MCP endpoint';
-  btn.className = 'insight-btn mcp done';
-  if(!window.demoState.mcpActionsAdded.includes(title)) {
-    window.demoState.mcpActionsAdded.push(title);
-  }
-  renderMcpRows();
-  showToast(`⚡ MCP action created for "${title.substring(0,25)}..."`);
-}
-
-// Init studio on first load if needed
-document.addEventListener('DOMContentLoaded', () => {
-  renderStudio();
-});
-</script>
 </body>
 </html>

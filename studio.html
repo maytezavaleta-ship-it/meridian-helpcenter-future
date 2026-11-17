@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Service Studio — Meridian Bank</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh}
+  .topnav{background:#052e16;color:#fff;display:flex;align-items:center;gap:0;padding:0 24px;height:52px;position:sticky;top:0;z-index:100}
+  .topnav-brand{font-weight:700;font-size:15px;color:#6ee7b7;margin-right:32px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .topnav-brand span{font-size:20px}
+  .topnav-links{display:flex;gap:2px;flex:1}
+  .nav-btn{background:none;border:none;color:#a7f3d0;padding:0 16px;height:52px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
+  .nav-btn:hover{color:#fff;background:rgba(255,255,255,.07)}
+  .nav-btn.active{color:#fff;border-bottom-color:#34d399;background:rgba(52,211,153,.1)}
+  .nav-label{margin-left:auto;color:#6ee7b7;font-size:11px;white-space:nowrap}
+
+  .studio-page{padding:28px 32px;max-width:1200px;margin:0 auto}
+  .studio-topbar{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+  .studio-title{font-size:22px;font-weight:800;color:#0f172a;margin-bottom:3px}
+  .studio-sub{font-size:13px;color:#64748b}
+  .preview-btn{background:#059669;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+  .preview-btn:hover{background:#047857}
+
+  .studio-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .studio-panel{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:20px}
+  .studio-panel-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:3px}
+  .studio-panel-sub{font-size:12px;color:#64748b;margin-bottom:16px}
+
+  .action-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;margin-bottom:4px;border:1.5px solid transparent;transition:all .15s}
+  .action-row:hover{background:#f8fafc}
+  .action-row.wire-highlight{border-color:#fbbf24;background:#fffbeb}
+  .action-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:#f1f5f9}
+  .action-name{font-size:13px;font-weight:600;color:#0f172a;flex:1}
+  .seg-btn{display:flex;border:1.5px solid #e2e8f0;border-radius:7px;overflow:hidden;flex-shrink:0}
+  .seg-opt{padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b;border:none;transition:all .15s;white-space:nowrap}
+  .seg-opt:hover{background:#f8fafc}
+  .seg-opt.active-ai{background:#d1fae5;color:#059669}
+  .seg-opt.active-portal{background:#dbeafe;color:#1d4ed8}
+  .seg-opt.active-human{background:#fee2e2;color:#dc2626}
+  .seg-divider{width:1px;background:#e2e8f0}
+
+  .mcp-section{margin-top:20px;padding-top:16px;border-top:1.5px solid #f1f5f9}
+  .mcp-title{font-size:12px;font-weight:700;color:#334155;margin-bottom:12px;display:flex;align-items:center;gap:6px;justify-content:space-between}
+  .mcp-add-btn{background:#f8fafc;border:1px solid #e2e8f0;color:#059669;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer}
+  .mcp-row{display:flex;align-items:center;gap:8px;padding:8px;background:#f8fafc;border-radius:8px;margin-bottom:6px;font-size:12px;color:#334155}
+  .mcp-row-name{flex:1;font-weight:500}
+  .mcp-toggle{width:28px;height:16px;border-radius:8px;background:#059669;position:relative;cursor:pointer;flex-shrink:0}
+  .mcp-toggle::after{content:'';position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .15s}
+  .mcp-tag{font-size:10px;background:#d1fae5;color:#059669;padding:2px 7px;border-radius:10px;font-weight:600}
+
+  .insight-card{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px}
+  .insight-article{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:3px}
+  .insight-stat{font-size:11px;color:#64748b;margin-bottom:10px}
+  .insight-actions{display:flex;gap:8px}
+  .insight-btn{font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;cursor:pointer;border:1.5px solid;transition:all .15s}
+  .insight-btn.publish{border-color:#059669;color:#059669;background:#fff}
+  .insight-btn.publish:hover{background:#f0fdf4}
+  .insight-btn.publish.done{background:#d1fae5;color:#065f46;border-color:#6ee7b7;cursor:default}
+  .insight-btn.mcp{border-color:#1d4ed8;color:#1d4ed8;background:#fff}
+  .insight-btn.mcp:hover{background:#eff6ff}
+  .insight-btn.mcp.done{background:#dbeafe;color:#1e40af;border-color:#93c5fd;cursor:default}
+
+  .handoff-preview{background:#0f172a;border-radius:12px;padding:20px;font-family:'Courier New',monospace;font-size:12px;color:#94a3b8;line-height:1.9}
+  .hp-header{color:#e2e8f0;font-weight:700;border-bottom:1px solid #334155;padding-bottom:8px;margin-bottom:12px;font-family:system-ui}
+  .hp-section{color:#6ee7b7;margin-top:10px;margin-bottom:4px;font-family:system-ui;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .hp-item{color:#cbd5e1}
+  .hp-suggestion{margin-top:12px;background:#1e293b;border-left:3px solid #34d399;padding:10px 12px;border-radius:0 8px 8px 0;color:#e2e8f0;font-family:system-ui;font-size:12px;line-height:1.6}
+  .hp-label{font-size:10px;color:#475569;margin-top:12px;font-family:system-ui;text-align:right}
+
+  .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
+  .toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-brand"><span>🏦</span> Meridian Bank</div>
+  <div class="topnav-links">
+    <a href="index.html" class="nav-btn">Overview</a>
+    <a href="ai.html" class="nav-btn">AI Interface</a>
+    <a href="portal.html" class="nav-btn">Customer Portal</a>
+    <a href="studio.html" class="nav-btn active">Self-Service Studio</a>
+  </div>
+  <div class="nav-label">Help Center of the Future — Leadership Demo</div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<div class="studio-page">
+  <div class="studio-topbar">
+    <div>
+      <div class="studio-title">🏦 Meridian Self-Service Studio</div>
+      <div class="studio-sub">Help Center Configuration — configure routing, MCP actions, and content promotion in one place</div>
+    </div>
+    <a href="ai.html" class="preview-btn">Preview AI Interface →</a>
+  </div>
+
+  <div class="studio-layout">
+    <!-- LEFT: ACTION LIBRARY -->
+    <div>
+      <div class="studio-panel" style="margin-bottom:20px">
+        <div class="studio-panel-title">Action Routing Rules</div>
+        <div class="studio-panel-sub">Configure where each customer action is handled — changes take effect immediately</div>
+        <div id="action-rows"></div>
+
+        <div class="mcp-section">
+          <div class="mcp-title">
+            <span>🔌 MCP Endpoint Actions</span>
+            <button class="mcp-add-btn">+ Add new action</button>
+          </div>
+          <div id="mcp-rows"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: INSIGHTS + HANDOFF -->
+    <div>
+      <div class="studio-panel" style="margin-bottom:20px">
+        <div class="studio-panel-title">🔔 Promote to Self-Service</div>
+        <div class="studio-panel-sub">Knowledge used heavily by agents last 30 days — promote to portal or create MCP action</div>
+        <div id="insight-cards"></div>
+      </div>
+
+      <div class="studio-panel">
+        <div class="studio-panel-title">📋 Portal Session Summary</div>
+        <div class="studio-panel-sub">Sent to agents automatically when a customer escalates from portal</div>
+        <div class="handoff-preview">
+          <div class="hp-header">Customer: Alex Rivera &nbsp;|&nbsp; Session: 14 min &nbsp;|&nbsp; Escalated: 2:34 PM</div>
+          <div class="hp-section">Portal Activity</div>
+          <div class="hp-item">✓ Viewed 4 articles (wire transfer limits ×2, international transfers, fees)</div>
+          <div class="hp-item">✓ Attempted wire transfer — stopped at verification step</div>
+          <div class="hp-item">✓ Tried password reset — unsuccessful after 2 attempts</div>
+          <div class="hp-item">✓ Opened mortgage comparison page — spent 6 min</div>
+          <div class="hp-section">AI Session Transcript (last 3 exchanges)</div>
+          <div class="hp-item">Alex: "I need to wire $8,000 to escrow"</div>
+          <div class="hp-item">Agent: Routing rule applied — Human Required</div>
+          <div class="hp-item">Alex: "Can you help me reset my password?"</div>
+          <div class="hp-item">Agent: Directed to portal reset flow</div>
+          <div class="hp-suggestion">"Hi Alex, I can see you were trying to complete a wire transfer and ran into some trouble with verification. Let me help you get that sorted out."</div>
+          <div class="hp-label">Generated from portal telemetry + AI session context · Zero manual effort</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const actions = [
+  { id:'balance',      icon:'💰', name:'Account Balance',      route:'inai' },
+  { id:'transactions', icon:'📄', name:'Recent Transactions',   route:'inai' },
+  { id:'freeze',       icon:'🧊', name:'Card Freeze/Unfreeze',  route:'inai' },
+  { id:'mortgage',     icon:'🏠', name:'Mortgage Inquiry',      route:'portal' },
+  { id:'loan-compare', icon:'📊', name:'Loan Comparison',       route:'portal' },
+  { id:'rate-alert',   icon:'⚡', name:'Rate Alerts',           route:'inai' },
+  { id:'wire',         icon:'📤', name:'Wire Transfer',         route:'human', highlight:true },
+  { id:'loan-app',     icon:'📝', name:'Loan Application',      route:'human' },
+  { id:'dispute',      icon:'🚩', name:'Dispute Transaction',   route:'human' },
+];
+
+const mcpBase = ['Account Balance','Recent Transactions','Card Freeze/Unfreeze','Rate Alerts'];
+let mcpActionsAdded = [];
+let publishedArticles = [];
+
+// Load saved wire route from localStorage
+const savedRoute = localStorage.getItem('meridian_wireTransferRoute');
+if(savedRoute) {
+  const wire = actions.find(a => a.id === 'wire');
+  if(wire) wire.route = savedRoute;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function renderActionRows() {
+  const container = document.getElementById('action-rows');
+  container.innerHTML = '';
+  actions.forEach(a => {
+    const row = document.createElement('div');
+    row.className = 'action-row' + (a.highlight ? ' wire-highlight' : '');
+    row.innerHTML = `
+      <div class="action-icon">${a.icon}</div>
+      <div class="action-name">${a.name}</div>
+      <div class="seg-btn">
+        <button class="seg-opt ${a.route==='inai'?'active-ai':''}" onclick="setRoute('${a.id}','inai')">🤖 In-AI</button>
+        <div class="seg-divider"></div>
+        <button class="seg-opt ${a.route==='portal'?'active-portal':''}" onclick="setRoute('${a.id}','portal')">🌐 Portal</button>
+        <div class="seg-divider"></div>
+        <button class="seg-opt ${a.route==='human'?'active-human':''}" onclick="setRoute('${a.id}','human')">👤 Human</button>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function setRoute(id, route) {
+  const action = actions.find(a => a.id === id);
+  if(!action) return;
+  action.route = route;
+  if(id === 'wire') {
+    localStorage.setItem('meridian_wireTransferRoute', route);
+    showToast('⚡ Routing updated — live in AI Interface and MCP endpoint');
+  } else {
+    showToast(`⚡ ${action.name} → ${route === 'inai' ? 'In-AI' : route === 'portal' ? 'Portal' : 'Human Required'}`);
+  }
+  renderActionRows();
+  renderMcpRows();
+}
+
+function renderMcpRows() {
+  const container = document.getElementById('mcp-rows');
+  container.innerHTML = '';
+  const inaiActions = actions.filter(a => a.route === 'inai').map(a => a.name);
+  const allMcp = [...new Set([...mcpBase.filter(n => inaiActions.includes(n)), ...mcpActionsAdded])];
+  allMcp.forEach(name => {
+    const row = document.createElement('div');
+    row.className = 'mcp-row';
+    row.innerHTML = `
+      <div class="mcp-row-name">${name}</div>
+      <div class="mcp-tag">MCP</div>
+      <div class="mcp-toggle" title="Available to external AI agents"></div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+const insights = [
+  { id:'i1', title:'How to dispute a transaction',       stat:'Used by agents 1,247 times last 30 days' },
+  { id:'i2', title:'Understanding wire transfer limits', stat:'Used by agents 893 times last 30 days' },
+  { id:'i3', title:'Mortgage pre-approval checklist',    stat:'Used by agents 741 times last 30 days' },
+];
+
+function renderInsightCards() {
+  const container = document.getElementById('insight-cards');
+  insights.forEach(ins => {
+    const card = document.createElement('div');
+    card.className = 'insight-card';
+    card.innerHTML = `
+      <div class="insight-article">${ins.title}</div>
+      <div class="insight-stat">${ins.stat}</div>
+      <div class="insight-actions">
+        <button class="insight-btn publish" id="pub-${ins.id}" onclick="publishArticle('${ins.id}','${ins.title}')">Publish to Portal →</button>
+        <button class="insight-btn mcp" id="mcp-${ins.id}" onclick="addMcpFromInsight('${ins.id}','${ins.title}')">Create MCP Action →</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function publishArticle(id, title) {
+  const btn = document.getElementById('pub-' + id);
+  btn.textContent = '✓ Published — live on portal';
+  btn.className = 'insight-btn publish done';
+  showToast(`✓ "${title.substring(0,30)}..." published to portal`);
+}
+
+function addMcpFromInsight(id, title) {
+  const btn = document.getElementById('mcp-' + id);
+  btn.textContent = '✓ Added to MCP endpoint';
+  btn.className = 'insight-btn mcp done';
+  if(!mcpActionsAdded.includes(title)) mcpActionsAdded.push(title);
+  renderMcpRows();
+  showToast(`⚡ MCP action created for "${title.substring(0,25)}..."`);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderActionRows();
+  renderMcpRows();
+  renderInsightCards();
+});
+</script>
+</body>
+</html>
