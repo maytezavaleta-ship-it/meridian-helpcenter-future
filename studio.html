@@ -287,7 +287,13 @@ function setRoute(id, route) {
   action.route = route;
   if(id === 'wire') {
     localStorage.setItem('meridian_wireTransferRoute', route);
-    showToast('⚡ Routing updated — live in AI Interface and MCP endpoint');
+    // Update all AI Interface links in this page to carry the wire state
+    document.querySelectorAll('a[href], a[href^="ai.html"]').forEach(a => {
+      if(a.getAttribute('href') === 'ai.html' || a.getAttribute('href').startsWith('ai.html')) {
+        a.href = `ai.html?wire=${route}`;
+      }
+    });
+    showToast('⚡ Routing updated — click AI Interface to see the change');
   } else {
     showToast(`⚡ ${action.name} → ${route === 'inai' ? 'In-AI' : route === 'portal' ? 'Portal' : 'Human Required'}`);
   }

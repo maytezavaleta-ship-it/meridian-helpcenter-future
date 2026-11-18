@@ -128,7 +128,7 @@
     <div class="starters-grid">
       <div class="starter-card" onclick="runFlow('balance')">💰 What's my account balance?</div>
       <div class="starter-card" onclick="runFlow('mortgage')">🏠 I want to explore refinancing my mortgage</div>
-      <div class="starter-card" id="wire-starter" onclick="runFlow('wire')">📤 I need to wire $8,000 to escrow</div>
+      <div class="starter-card" id="wire-starter" onclick="runFlow('wire')" style="display:none">📤 I need to wire $8,000 to escrow</div>
     </div>
   </div>
 </div>
@@ -137,6 +137,9 @@
 let aiFlowActive = false;
 
 function getWireRoute() {
+  // URL param is the most reliable for local files — Studio nav links carry it
+  const param = new URLSearchParams(window.location.search).get('wire');
+  if(param === 'inai' || param === 'human') return param;
   return localStorage.getItem('meridian_wireTransferRoute') || 'human';
 }
 
@@ -146,18 +149,18 @@ function applyWireConfig() {
   const card = document.getElementById('wire-starter');
   if(route === 'inai') {
     banner.classList.add('show');
+    card.style.display = '';
     card.classList.add('inai-enabled');
-    card.innerHTML = '<div class="starter-inai-badge">✓ In-AI</div>📤 I need to wire $8,000 to escrow';
+    card.innerHTML = '<div class="starter-inai-badge">✦ New in-AI</div>📤 I need to wire $8,000 to escrow';
   } else {
     banner.classList.remove('show');
+    card.style.display = 'none';
     card.classList.remove('inai-enabled');
-    card.innerHTML = '📤 I need to wire $8,000 to escrow';
   }
 }
 
 applyWireConfig();
 window.addEventListener('pageshow', applyWireConfig);
-window.addEventListener('focus', applyWireConfig);
 window.addEventListener('storage', e => { if(e.key === 'meridian_wireTransferRoute') applyWireConfig(); });
 
 function showToast(msg) {
