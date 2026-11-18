@@ -66,8 +66,17 @@
   .ai-starters{padding:16px 24px 20px;border-top:1px solid #f1f5f9;max-width:760px;width:100%;margin:0 auto;flex-shrink:0}
   .starters-label{font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
   .starters-grid{display:flex;gap:10px;flex-wrap:wrap}
-  .starter-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#334155;cursor:pointer;transition:all .15s;flex:1;min-width:200px;line-height:1.4}
+  .starter-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#334155;cursor:pointer;transition:all .15s;flex:1;min-width:200px;line-height:1.4;position:relative}
   .starter-card:hover{border-color:#059669;color:#052e16;background:#f0fdf4}
+  .starter-card.inai-enabled{border-color:#34d399;background:#f0fdf4}
+  .starter-inai-badge{position:absolute;top:-9px;right:10px;background:#059669;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+  .inai-banner{background:#f0fdf4;border:1.5px solid #34d399;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:none;align-items:center;gap:10px}
+  .inai-banner.show{display:flex}
+  .inai-banner-icon{font-size:18px;flex-shrink:0}
+  .inai-banner-text{font-size:12px;color:#052e16;flex:1}
+  .inai-banner-text strong{display:block;font-size:13px;margin-bottom:1px}
+  .inai-banner-link{font-size:11px;color:#059669;text-decoration:none;font-weight:600;white-space:nowrap}
+  .inai-banner-link:hover{text-decoration:underline}
 
   .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
   .toast.show{opacity:1;transform:translateY(0)}
@@ -107,11 +116,19 @@
   </div>
 
   <div class="ai-starters" id="ai-starters">
+    <div class="inai-banner" id="wire-inai-banner">
+      <div class="inai-banner-icon">⚡</div>
+      <div class="inai-banner-text">
+        <strong>Wire Transfer is now available in-AI</strong>
+        Configured in Self-Service Studio — Alex can complete this without leaving the AI interface.
+      </div>
+      <a href="studio.html" class="inai-banner-link">Change in Studio ⚙️</a>
+    </div>
     <div class="starters-label">Suggested actions</div>
     <div class="starters-grid">
       <div class="starter-card" onclick="runFlow('balance')">💰 What's my account balance?</div>
       <div class="starter-card" onclick="runFlow('mortgage')">🏠 I want to explore refinancing my mortgage</div>
-      <div class="starter-card" onclick="runFlow('wire')">📤 I need to wire $8,000 to escrow</div>
+      <div class="starter-card" id="wire-starter" onclick="runFlow('wire')">📤 I need to wire $8,000 to escrow</div>
     </div>
   </div>
 </div>
@@ -122,6 +139,23 @@ let aiFlowActive = false;
 function getWireRoute() {
   return localStorage.getItem('meridian_wireTransferRoute') || 'human';
 }
+
+function applyWireConfig() {
+  const route = getWireRoute();
+  const banner = document.getElementById('wire-inai-banner');
+  const card = document.getElementById('wire-starter');
+  if(route === 'inai') {
+    banner.classList.add('show');
+    card.classList.add('inai-enabled');
+    card.innerHTML = '<div class="starter-inai-badge">✓ In-AI</div>📤 I need to wire $8,000 to escrow';
+  } else {
+    banner.classList.remove('show');
+    card.classList.remove('inai-enabled');
+    card.innerHTML = '📤 I need to wire $8,000 to escrow';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', applyWireConfig);
 
 function showToast(msg) {
   const t = document.getElementById('toast');
