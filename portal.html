@@ -191,6 +191,39 @@
   .apply-submit-btn{background:#059669;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px}
   .apply-form-label{font-size:10px;color:#94a3b8}
   .savings-success{color:#059669 !important;font-weight:700}
+  /* View switching */
+  .view-back{display:flex;align-items:center;gap:6px;color:#059669;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:20px;background:none;border:none;padding:0}
+  .view-back:hover{color:#047857}
+  .view-title{font-size:20px;font-weight:800;color:#052e16;margin-bottom:4px}
+  .view-sub{font-size:13px;color:#166534;margin-bottom:24px}
+  .mortgage-compare-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+  .mc-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px;position:relative;transition:all .2s}
+  .mc-card.best{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.12)}
+  .mc-card-badge{position:absolute;top:-10px;left:14px;background:#059669;color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px}
+  .mc-card-type{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .mc-card-rate{font-size:30px;font-weight:800;color:#052e16;margin-bottom:3px}
+  .mc-card.best .mc-card-rate{color:#059669}
+  .mc-card-monthly{font-size:13px;color:#334155;font-weight:600;margin-bottom:4px}
+  .mc-card-detail{font-size:11px;color:#94a3b8}
+  .compare-table{width:100%;border-collapse:collapse;margin-bottom:24px;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden}
+  .compare-table th{background:#f8fafc;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid #e2e8f0}
+  .compare-table th.best{background:#f0fdf4;color:#059669}
+  .compare-table td{font-size:13px;color:#334155;padding:10px 14px;border-bottom:1px solid #f8fafc}
+  .compare-table tr:last-child td{border-bottom:none}
+  .compare-table td.best{background:#f0fdf4;font-weight:700;color:#052e16}
+  .compare-table td.label{font-weight:600;color:#64748b;font-size:12px}
+  .savings-compare-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .sc-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:20px;position:relative}
+  .sc-card.recommended{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.12)}
+  .sc-card-badge{position:absolute;top:-10px;left:14px;background:#059669;color:#fff;font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px}
+  .sc-card-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+  .sc-card-apy{font-size:28px;font-weight:800;color:#052e16;margin-bottom:3px}
+  .sc-card.recommended .sc-card-apy{color:#059669}
+  .sc-card-annual{font-size:13px;color:#334155;font-weight:600;margin-bottom:4px}
+  .sc-card-detail{font-size:11px;color:#94a3b8;margin-bottom:14px}
+  .sc-switch-btn{background:#059669;color:#fff;border:none;padding:10px 0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;transition:all .15s}
+  .sc-switch-btn:hover:not([disabled]){background:#047857}
+  .savings-fdic-note{font-size:11px;color:#94a3b8;text-align:center;margin-top:4px}
 </style>
 </head>
 <body>
@@ -367,81 +400,97 @@
     </div>
 
     <div class="auth-main">
-      <div class="auth-welcome">Good afternoon, Alex.</div>
-      <div class="auth-welcome-sub">Here's your financial snapshot — Nov 17, 2025</div>
 
-      <div class="accounts-grid">
-        <div class="acct-tile">
-          <div class="acct-tile-label">Checking</div>
-          <div class="acct-tile-amount">$12,400</div>
-          <div class="acct-tile-change">↑ +$2,100 this month</div>
+      <!-- DASHBOARD VIEW (default) -->
+      <div id="view-dashboard">
+        <div class="auth-welcome">Good afternoon, Alex.</div>
+        <div class="auth-welcome-sub">Here's your financial snapshot — Nov 17, 2025</div>
+        <div class="accounts-grid">
+          <div class="acct-tile">
+            <div class="acct-tile-label">Checking</div>
+            <div class="acct-tile-amount">$12,400</div>
+            <div class="acct-tile-change">↑ +$2,100 this month</div>
+          </div>
+          <div class="acct-tile" id="savings-tile">
+            <div class="acct-tile-label">Savings</div>
+            <div class="acct-tile-amount">$31,200</div>
+            <div class="acct-tile-change" id="savings-apy" style="color:#94a3b8">0.5% APY</div>
+          </div>
+          <div class="acct-tile">
+            <div class="acct-tile-label">Credit Available</div>
+            <div class="acct-tile-amount">$4,200</div>
+            <div class="acct-tile-change" style="color:#64748b">of $8,000 limit</div>
+          </div>
         </div>
-        <div class="acct-tile" id="savings-tile">
-          <div class="acct-tile-label">Savings</div>
-          <div class="acct-tile-amount">$31,200</div>
-          <div class="acct-tile-change" id="savings-apy" style="color:#94a3b8">0.5% APY</div>
+        <div class="section-title">Recent Transactions</div>
+        <div class="transactions">
+          <div class="tx-row">
+            <div class="tx-icon" style="background:#fef9c3">🛒</div>
+            <div><div class="tx-name">Whole Foods Market</div><div class="tx-date">Nov 16</div></div>
+            <div class="tx-amount debit">-$87.42</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon" style="background:#d1fae5">💼</div>
+            <div><div class="tx-name">Direct Deposit — Employer</div><div class="tx-date">Nov 15</div></div>
+            <div class="tx-amount credit">+$4,200.00</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon" style="background:#ffe4e6">🏠</div>
+            <div><div class="tx-name">Mortgage Payment</div><div class="tx-date">Nov 14</div></div>
+            <div class="tx-amount debit">-$2,340.00</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon" style="background:#ede9fe">⚡</div>
+            <div><div class="tx-name">Pacific Gas & Electric</div><div class="tx-date">Nov 12</div></div>
+            <div class="tx-amount debit">-$124.18</div>
+          </div>
         </div>
-        <div class="acct-tile">
-          <div class="acct-tile-label">Credit Available</div>
-          <div class="acct-tile-amount">$4,200</div>
-          <div class="acct-tile-change" style="color:#64748b">of $8,000 limit</div>
+        <div class="promo-card" id="savings-promo">
+          <div class="promo-text">
+            <strong>Put your $12,400 to work</strong>
+            <span id="savings-promo-text">Move to a Meridian High-Yield account and earn 4.8% APY — that's $595/year more.</span>
+          </div>
+          <button class="promo-btn" id="savings-promo-btn">Learn More</button>
         </div>
       </div>
 
-      <div class="section-title">Recent Transactions</div>
-      <div class="transactions">
-        <div class="tx-row">
-          <div class="tx-icon" style="background:#fef9c3">🛒</div>
-          <div><div class="tx-name">Whole Foods Market</div><div class="tx-date">Nov 16</div></div>
-          <div class="tx-amount debit">-$87.42</div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon" style="background:#d1fae5">💼</div>
-          <div><div class="tx-name">Direct Deposit — Employer</div><div class="tx-date">Nov 15</div></div>
-          <div class="tx-amount credit">+$4,200.00</div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon" style="background:#ffe4e6">🏠</div>
-          <div><div class="tx-name">Mortgage Payment</div><div class="tx-date">Nov 14</div></div>
-          <div class="tx-amount debit">-$2,340.00</div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon" style="background:#ede9fe">⚡</div>
-          <div><div class="tx-name">Pacific Gas & Electric</div><div class="tx-date">Nov 12</div></div>
-          <div class="tx-amount debit">-$124.18</div>
-        </div>
-      </div>
-
-      <div class="promo-card" id="savings-promo">
-        <div class="promo-text">
-          <strong>Put your $12,400 to work</strong>
-          <span id="savings-promo-text">Move to a Meridian High-Yield account and earn 4.8% APY — that's $595/year more.</span>
-        </div>
-        <button class="promo-btn" id="savings-promo-btn">Learn More</button>
-      </div>
-
-      <!-- Mortgage section — driven by agent -->
-      <div class="section-title" style="margin-top:20px">Mortgage Options</div>
-      <div id="mortgage-section">
-        <div class="agent-section-label" id="mortgage-agent-label" style="display:none"></div>
-        <div class="rate-cards" id="rate-cards">
-          <div class="rate-card" id="rate-30yr">
-            <div class="rate-card-label">30-Year Fixed</div>
-            <div class="rate-card-rate">6.4%</div>
-            <div class="rate-card-detail">Monthly est. $2,491 on $400k</div>
+      <!-- MORTGAGE VIEW (agent navigates here after compare_products) -->
+      <div id="view-mortgage" style="display:none">
+        <button class="view-back" onclick="switchView('dashboard')">← Back to Dashboard</button>
+        <div class="view-title">Mortgage Options — $400k · Austin, TX</div>
+        <div class="view-sub">Your agent analyzed current rates and found your best match</div>
+        <div class="mortgage-compare-cards">
+          <div class="mc-card">
+            <div class="mc-card-type">30-Year Fixed</div>
+            <div class="mc-card-rate">6.4%</div>
+            <div class="mc-card-monthly">$2,491 / month</div>
+            <div class="mc-card-detail">Total interest: $497k over loan life</div>
           </div>
-          <div class="rate-card" id="rate-15yr">
-            <div class="rate-card-label">15-Year Fixed</div>
-            <div class="rate-card-rate">5.9%</div>
-            <div class="rate-card-detail">Monthly est. $3,370 on $400k</div>
+          <div class="mc-card best">
+            <div class="mc-card-badge">✦ Best for your profile</div>
+            <div class="mc-card-type">15-Year Fixed</div>
+            <div class="mc-card-rate">5.9%</div>
+            <div class="mc-card-monthly">$3,370 / month</div>
+            <div class="mc-card-detail">Saves $182k vs 30-yr · break-even: 3.1 yrs</div>
           </div>
-          <div class="rate-card" id="rate-arm">
-            <div class="rate-card-label">5/1 ARM</div>
-            <div class="rate-card-rate">5.1%</div>
-            <div class="rate-card-detail">Monthly est. $2,165 on $400k · adjusts yr 6</div>
+          <div class="mc-card">
+            <div class="mc-card-type">5/1 ARM</div>
+            <div class="mc-card-rate">5.1%</div>
+            <div class="mc-card-monthly">$2,165 / month</div>
+            <div class="mc-card-detail">Adjusts year 6 — rate risk</div>
           </div>
         </div>
-        <!-- Apply form — appears when agent hits human boundary -->
+        <table class="compare-table">
+          <thead>
+            <tr><th>Metric</th><th>30-yr Fixed</th><th class="best">15-yr Fixed ✦</th><th>5/1 ARM</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="label">Rate</td><td>6.4%</td><td class="best">5.9%</td><td>5.1%</td></tr>
+            <tr><td class="label">Monthly payment</td><td>$2,491</td><td class="best">$3,370</td><td>$2,165</td></tr>
+            <tr><td class="label">Total paid</td><td>$897k</td><td class="best">$607k</td><td>varies</td></tr>
+            <tr><td class="label">Break-even vs 30-yr</td><td>—</td><td class="best">3.1 years</td><td>—</td></tr>
+          </tbody>
+        </table>
         <div class="apply-form-card" id="apply-form-card" style="display:none">
           <div class="apply-form-header">
             <div class="apply-form-icon">👤</div>
@@ -459,6 +508,31 @@
           <div class="apply-form-label">⚙️ <code>apply_for_loan</code> — human authorization required</div>
         </div>
       </div>
+
+      <!-- SAVINGS VIEW (agent navigates here after browse_offers) -->
+      <div id="view-savings" style="display:none">
+        <button class="view-back" onclick="switchView('dashboard')">← Back to Dashboard</button>
+        <div class="view-title">Savings Options — Alex Rivera</div>
+        <div class="view-sub">Your agent compared savings products for your $31,200 balance</div>
+        <div class="savings-compare-cards">
+          <div class="sc-card">
+            <div class="sc-card-label">Standard Savings (current)</div>
+            <div class="sc-card-apy">0.5%</div>
+            <div class="sc-card-annual">$156 / year on $31,200</div>
+            <div class="sc-card-detail">No minimum balance · FDIC insured</div>
+          </div>
+          <div class="sc-card recommended">
+            <div class="sc-card-badge">✦ Recommended</div>
+            <div class="sc-card-label">High-Yield Savings</div>
+            <div class="sc-card-apy">4.8%</div>
+            <div class="sc-card-annual">$1,498 / year — earn $1,342 more</div>
+            <div class="sc-card-detail">No minimum balance · FDIC insured</div>
+            <button class="sc-switch-btn" id="savings-switch-btn-center" onclick="executeSavingsSwitch()">Switch to High-Yield →</button>
+          </div>
+        </div>
+        <div class="savings-fdic-note">Rate effective as of today. FDIC insured up to $250,000. Subject to change.</div>
+      </div>
+
     </div>
 
     <!-- AGENT ZONE -->
@@ -560,6 +634,13 @@ function clearChildren(el) {
   while(el.firstChild) el.removeChild(el.firstChild);
 }
 
+function switchView(id) {
+  ['dashboard','mortgage','savings'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if(el) el.style.display = v === id ? '' : 'none';
+  });
+}
+
 function resetActivityFeed() {
   document.getElementById('webmcp-activity').classList.remove('show');
   clearChildren(document.getElementById('webmcp-activity-lines'));
@@ -570,13 +651,11 @@ function resetActivityFeed() {
   if(applyBtn) { applyBtn.textContent = 'Apply for this rate →'; applyBtn.disabled = false; applyBtn.style.background = ''; }
   const switchBtn = document.getElementById('savings-switch-btn');
   if(switchBtn) { switchBtn.textContent = 'Switch to High-Yield →'; switchBtn.disabled = false; switchBtn.style.background = ''; }
-  // Clear center highlights
-  document.getElementById('mortgage-section').classList.remove('agent-highlight');
-  document.getElementById('mortgage-agent-label').style.display = 'none';
-  document.getElementById('rate-15yr').classList.remove('agent-selected');
-  document.getElementById('apply-form-card').style.display = 'none';
-  document.getElementById('savings-tile').classList.remove('agent-highlight');
-  document.getElementById('savings-promo').classList.remove('agent-highlight');
+  const switchBtnCenter = document.getElementById('savings-switch-btn-center');
+  if(switchBtnCenter) { switchBtnCenter.textContent = 'Switch to High-Yield →'; switchBtnCenter.disabled = false; switchBtnCenter.style.background = ''; }
+  const applyFormCard = document.getElementById('apply-form-card');
+  if(applyFormCard) applyFormCard.style.display = 'none';
+  switchView('dashboard');
 }
 
 function addActivityLine(text, isDone, delay, container) {
@@ -597,30 +676,14 @@ function runMortgageFlow() {
   const feed = document.getElementById('webmcp-activity');
   const lines = document.getElementById('webmcp-activity-lines');
   feed.classList.add('show');
-  const mortgageSection = document.getElementById('mortgage-section');
-  const label = document.getElementById('mortgage-agent-label');
-  const rate15 = document.getElementById('rate-15yr');
   Promise.resolve()
-    .then(() => {
-      // Agent calls get_mortgage_rates → highlight mortgage section in center
-      mortgageSection.classList.add('agent-highlight');
-      label.style.display = 'flex';
-      label.textContent = '🤖 Your agent is browsing rates...';
-      mortgageSection.scrollIntoView({behavior:'smooth', block:'nearest'});
-      return addActivityLine('🔍 Calling get_mortgage_rates...', false, 100, lines);
-    })
-    .then(() => {
-      // Agent calls compare_products → 15yr card gets selected in center
-      return addActivityLine('📊 Calling compare_products — 30-yr vs 15-yr vs ARM...', false, 500, lines);
-    })
-    .then(() => {
-      setTimeout(() => {
-        rate15.classList.add('agent-selected');
-        label.textContent = '🤖 Agent identified best match';
-      }, 300);
-      return addActivityLine('✓ Analysis complete — 15-yr fixed is optimal', true, 1100, lines);
-    })
-    .then(() => setTimeout(() => document.getElementById('webmcp-mortgage-result').classList.add('show'), 1500));
+    .then(() => addActivityLine('🔍 Calling get_mortgage_rates...', false, 100, lines))
+    .then(() => addActivityLine('📊 Calling compare_products — 30-yr vs 15-yr vs ARM...', false, 600, lines))
+    .then(() => addActivityLine('✓ Analysis complete — 15-yr fixed is optimal', true, 1200, lines))
+    .then(() => setTimeout(() => {
+      document.getElementById('webmcp-mortgage-result').classList.add('show');
+      switchView('mortgage');
+    }, 1600));
 }
 
 function runSavingsFlow() {
@@ -628,22 +691,14 @@ function runSavingsFlow() {
   const feed = document.getElementById('webmcp-activity');
   const lines = document.getElementById('webmcp-activity-lines');
   feed.classList.add('show');
-  const savingsTile = document.getElementById('savings-tile');
-  const promoCard = document.getElementById('savings-promo');
   Promise.resolve()
-    .then(() => {
-      // Agent calls get_account_summary → highlight savings tile
-      savingsTile.classList.add('agent-highlight');
-      savingsTile.scrollIntoView({behavior:'smooth', block:'nearest'});
-      return addActivityLine('🔍 Calling get_account_summary...', false, 100, lines);
-    })
-    .then(() => {
-      // Agent calls browse_offers → highlight promo card
-      setTimeout(() => promoCard.classList.add('agent-highlight'), 400);
-      return addActivityLine('📊 Calling browse_offers — savings products...', false, 500, lines);
-    })
-    .then(() => addActivityLine('✓ Personalized options ready', true, 1100, lines))
-    .then(() => setTimeout(() => document.getElementById('webmcp-savings-result').classList.add('show'), 1500));
+    .then(() => addActivityLine('🔍 Calling get_account_summary...', false, 100, lines))
+    .then(() => addActivityLine('📊 Calling browse_offers — savings products...', false, 600, lines))
+    .then(() => addActivityLine('✓ Personalized options ready', true, 1200, lines))
+    .then(() => setTimeout(() => {
+      document.getElementById('webmcp-savings-result').classList.add('show');
+      switchView('savings');
+    }, 1600));
 }
 
 function showMortgageHuman() {
@@ -652,9 +707,7 @@ function showMortgageHuman() {
   btn.textContent = '🔒 Requires human authorization';
   btn.disabled = true;
   btn.style.background = '#94a3b8';
-  // Drive center: show apply form below the highlighted rate card
   document.getElementById('apply-form-card').style.display = 'block';
-  document.getElementById('apply-form-card').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function executeSavingsSwitch() {
@@ -662,26 +715,22 @@ function executeSavingsSwitch() {
   const lines = document.getElementById('webmcp-activity-lines');
   clearChildren(lines);
   feed.classList.add('show');
-  const btn = document.getElementById('savings-switch-btn');
-  btn.disabled = true;
-  btn.style.background = '#94a3b8';
-  btn.textContent = 'Processing...';
+  const btns = [
+    document.getElementById('savings-switch-btn'),
+    document.getElementById('savings-switch-btn-center')
+  ];
+  btns.forEach(b => { if(b) { b.disabled = true; b.style.background = '#94a3b8'; b.textContent = 'Processing...'; }});
   Promise.resolve()
     .then(() => addActivityLine('⚡ Calling update_savings_tier...', false, 100, lines))
     .then(() => addActivityLine('✓ Switched to High-Yield Savings — 4.8% APY effective tomorrow', true, 700, lines))
     .then(() => setTimeout(() => {
-      btn.textContent = '✓ Switched to High-Yield Savings';
-      btn.style.background = '#065f46';
-      btn.disabled = false;
-      // Drive center: update savings tile and promo card
+      btns.forEach(b => { if(b) { b.textContent = '✓ Switched to High-Yield'; b.style.background = '#065f46'; b.disabled = false; }});
       const apyEl = document.getElementById('savings-apy');
-      apyEl.textContent = '↑ 4.8% APY';
-      apyEl.classList.add('savings-success');
+      if(apyEl) { apyEl.textContent = '↑ 4.8% APY'; apyEl.classList.add('savings-success'); }
       document.getElementById('savings-promo-text').textContent = '✓ Switched to High-Yield — earning 4.8% APY as of tomorrow.';
       document.getElementById('savings-promo-btn').textContent = '✓ Active';
       document.getElementById('savings-promo-btn').style.background = '#059669';
       document.getElementById('savings-promo-btn').style.color = '#fff';
-      document.getElementById('savings-tile').classList.remove('agent-highlight');
       showToast('✓ High-Yield Savings activated — 4.8% APY effective tomorrow');
     }, 1200));
 }

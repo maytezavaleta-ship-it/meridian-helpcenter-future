@@ -71,6 +71,38 @@
 
   .toast{position:fixed;bottom:28px;right:28px;background:#052e16;color:#6ee7b7;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid #166534}
   .toast.show{opacity:1;transform:translateY(0)}
+  /* WebMCP config section */
+  .webmcp-config-section{margin-top:24px}
+  .webmcp-config-title{font-size:18px;font-weight:800;color:#0f172a;margin-bottom:3px}
+  .webmcp-config-sub{font-size:13px;color:#64748b;margin-bottom:16px}
+  .webmcp-config-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .tool-perm-row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;border:1.5px solid transparent;margin-bottom:4px;transition:all .15s}
+  .tool-perm-row:hover{background:#f8fafc}
+  .tool-perm-name{font-family:monospace;font-size:12px;font-weight:600;color:#0f172a;flex:1}
+  .tool-perm-desc{font-size:11px;color:#64748b;flex:2}
+  .tool-perm-seg{display:flex;border:1.5px solid #e2e8f0;border-radius:7px;overflow:hidden;flex-shrink:0}
+  .tool-perm-opt{padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#64748b;border:none;transition:all .15s;white-space:nowrap}
+  .tool-perm-opt:hover{background:#f8fafc}
+  .tool-perm-opt.active-avail{background:#d1fae5;color:#059669}
+  .tool-perm-opt.active-locked{background:#fee2e2;color:#dc2626}
+  .endpoint-info-card{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:14px;margin-top:16px}
+  .endpoint-info-title{font-size:11px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .endpoint-info-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:12px}
+  .endpoint-info-row:last-child{border-bottom:none}
+  .endpoint-info-label{color:#64748b}
+  .endpoint-info-value{color:#0f172a;font-weight:600;font-family:monospace;font-size:11px}
+  .endpoint-info-value.live{color:#059669;font-family:system-ui}
+  .activity-log{background:#0f172a;border-radius:12px;padding:16px 18px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9}
+  .activity-log-header{color:#e2e8f0;font-weight:700;border-bottom:1px solid #334155;padding-bottom:8px;margin-bottom:12px;font-family:system-ui;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+  .activity-log-session{font-size:11px;color:#34d399;font-family:system-ui;font-weight:600}
+  .activity-log-row{display:flex;align-items:center;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .activity-log-row:last-child{border-bottom:none}
+  .al-status{width:18px;flex-shrink:0}
+  .al-tool{color:#a7f3d0;flex:1}
+  .al-time{color:#475569;font-size:11px;width:60px;text-align:right;flex-shrink:0}
+  .al-dur{color:#475569;font-size:11px;width:80px;text-align:right;flex-shrink:0}
+  .al-dur.blocked{color:#fbbf24}
+  .activity-log-note{font-size:10px;color:#475569;margin-top:10px;font-family:system-ui;text-align:right}
 </style>
 </head>
 <body>
@@ -144,6 +176,57 @@
       </div>
     </div>
   </div>
+
+  <!-- WEBMCP CONFIG SECTION -->
+  <div class="webmcp-config-section">
+    <div class="webmcp-config-title">🔌 WebMCP External Agent Access</div>
+    <div class="webmcp-config-sub">Configure which tools external AI agents (Claude, Copilot, etc.) can call via your WebMCP endpoint — changes take effect immediately</div>
+    <div class="webmcp-config-layout">
+      <div class="studio-panel">
+        <div class="studio-panel-title">Tool Permissions</div>
+        <div class="studio-panel-sub">Toggle which tools external agents can call vs. locked to human-only actions</div>
+        <div id="tool-perm-rows"></div>
+        <div class="endpoint-info-card">
+          <div class="endpoint-info-title">Endpoint Details</div>
+          <div class="endpoint-info-row">
+            <span class="endpoint-info-label">Endpoint</span>
+            <span class="endpoint-info-value">meridianbank.com/.well-known/mcp</span>
+          </div>
+          <div class="endpoint-info-row">
+            <span class="endpoint-info-label">Version</span>
+            <span class="endpoint-info-value">MCP 1.0</span>
+          </div>
+          <div class="endpoint-info-row">
+            <span class="endpoint-info-label">Active sessions</span>
+            <span class="endpoint-info-value live">1 (Claude)</span>
+          </div>
+          <div class="endpoint-info-row">
+            <span class="endpoint-info-label">Last activity</span>
+            <span class="endpoint-info-value live">2 min ago</span>
+          </div>
+        </div>
+      </div>
+      <div class="studio-panel">
+        <div class="studio-panel-title">Recent Agent Activity</div>
+        <div class="studio-panel-sub">Live WebMCP session telemetry — zero manual instrumentation</div>
+        <div class="activity-log">
+          <div class="activity-log-header">
+            Claude (WebMCP)
+            <span class="activity-log-session">● Session active · 14 min</span>
+          </div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">get_account_summary</span><span class="al-time">2:31 PM</span><span class="al-dur">0.2s</span></div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">get_mortgage_rates</span><span class="al-time">2:31 PM</span><span class="al-dur">0.4s</span></div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">compare_products</span><span class="al-time">2:32 PM</span><span class="al-dur">0.8s</span></div>
+          <div class="activity-log-row"><span class="al-status" style="color:#fbbf24">⚠</span><span class="al-tool" style="color:#fca5a5">apply_for_loan</span><span class="al-time">2:32 PM</span><span class="al-dur blocked">BLOCKED</span></div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">get_account_summary</span><span class="al-time">2:33 PM</span><span class="al-dur">0.1s</span></div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">browse_offers</span><span class="al-time">2:33 PM</span><span class="al-dur">0.3s</span></div>
+          <div class="activity-log-row"><span class="al-status">✓</span><span class="al-tool">update_savings_tier</span><span class="al-time">2:34 PM</span><span class="al-dur">0.6s</span></div>
+          <div class="activity-log-note">Full audit trail available. Zero manual instrumentation — generated from WebMCP session telemetry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -268,10 +351,51 @@ function addMcpFromInsight(id, title) {
   showToast(`⚡ MCP action created for "${title.substring(0,25)}..."`);
 }
 
+const mcpTools = [
+  { id:'get_account_summary',     desc:'Read account balances and status',  locked:false },
+  { id:'get_mortgage_rates',      desc:'Browse current mortgage rates',      locked:false },
+  { id:'compare_products',        desc:'Compare loan/savings products',      locked:false },
+  { id:'browse_offers',           desc:'View personalized offers',           locked:false },
+  { id:'get_transaction_history', desc:'View recent transactions',           locked:false },
+  { id:'apply_for_loan',          desc:'Submit loan applications',           locked:true  },
+  { id:'wire_transfer',           desc:'Initiate wire transfers',            locked:true  },
+  { id:'sign_document',           desc:'Sign documents',                     locked:true  },
+  { id:'make_payment',            desc:'Make payments',                      locked:true  },
+  { id:'update_savings_tier',     desc:'Change savings account tier',        locked:false },
+];
+
+function renderToolPermRows() {
+  const container = document.getElementById('tool-perm-rows');
+  if(!container) return;
+  container.innerHTML = '';
+  mcpTools.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'tool-perm-row';
+    row.innerHTML = `
+      <code class="tool-perm-name">${t.id}</code>
+      <span class="tool-perm-desc">${t.desc}</span>
+      <div class="tool-perm-seg">
+        <button class="tool-perm-opt ${!t.locked?'active-avail':''}" onclick="setToolPerm('${t.id}',false)">✅ Available</button>
+        <button class="tool-perm-opt ${t.locked?'active-locked':''}" onclick="setToolPerm('${t.id}',true)">🔒 Locked</button>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function setToolPerm(id, locked) {
+  const tool = mcpTools.find(t => t.id === id);
+  if(!tool) return;
+  tool.locked = locked;
+  renderToolPermRows();
+  showToast('⚡ WebMCP permissions updated — live immediately');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderActionRows();
   renderMcpRows();
   renderInsightCards();
+  renderToolPermRows();
 });
 </script>
 </body>
