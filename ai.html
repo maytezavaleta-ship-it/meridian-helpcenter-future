@@ -156,6 +156,7 @@ function applyWireConfig() {
 }
 
 document.addEventListener('DOMContentLoaded', applyWireConfig);
+window.addEventListener('pageshow', applyWireConfig);
 
 function showToast(msg) {
   const t = document.getElementById('toast');
