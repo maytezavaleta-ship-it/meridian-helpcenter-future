@@ -155,8 +155,10 @@ function applyWireConfig() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', applyWireConfig);
+applyWireConfig();
 window.addEventListener('pageshow', applyWireConfig);
+window.addEventListener('focus', applyWireConfig);
+window.addEventListener('storage', e => { if(e.key === 'meridian_wireTransferRoute') applyWireConfig(); });
 
 function showToast(msg) {
   const t = document.getElementById('toast');
