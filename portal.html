@@ -169,6 +169,28 @@
   .human-primary-btn{background:#d97706;color:#fff;border:none;padding:8px 0;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;width:100%}
   .human-secondary-btn{background:transparent;color:#fbbf24;border:1.5px solid #f59e0b;padding:8px 0;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;width:100%}
   .human-routing-label{font-size:10px;color:#64748b;margin-top:8px;line-height:1.4}
+  /* Agent-driven center states */
+  .agent-highlight{outline:2.5px solid #818cf8;outline-offset:5px;border-radius:14px;transition:outline .3s}
+  .agent-section-label{font-size:11px;color:#818cf8;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .rate-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+  .rate-card{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;transition:all .3s}
+  .rate-card-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;margin-bottom:4px}
+  .rate-card-rate{font-size:24px;font-weight:800;color:#052e16}
+  .rate-card-detail{font-size:11px;color:#94a3b8;margin-top:4px}
+  .rate-card.agent-selected{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.15);position:relative}
+  .rate-card.agent-selected::after{content:"✦ Best for your profile";position:absolute;top:-10px;left:12px;background:#059669;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+  .apply-form-card{background:#f0fdf4;border:2px solid #059669;border-radius:14px;padding:20px;margin-top:12px}
+  .apply-form-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+  .apply-form-icon{font-size:24px}
+  .apply-form-title{font-size:14px;font-weight:700;color:#052e16;margin-bottom:3px}
+  .apply-form-sub{font-size:12px;color:#166534}
+  .apply-form-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .apply-field{display:flex;flex-direction:column;gap:4px}
+  .apply-field label{font-size:11px;color:#64748b;font-weight:600}
+  .apply-field input{border:1.5px solid #bbf7d0;border-radius:7px;padding:8px 10px;font-size:12px;color:#0f172a;background:#fff}
+  .apply-submit-btn{background:#059669;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px}
+  .apply-form-label{font-size:10px;color:#94a3b8}
+  .savings-success{color:#059669 !important;font-weight:700}
 </style>
 </head>
 <body>
@@ -354,10 +376,10 @@
           <div class="acct-tile-amount">$12,400</div>
           <div class="acct-tile-change">↑ +$2,100 this month</div>
         </div>
-        <div class="acct-tile">
+        <div class="acct-tile" id="savings-tile">
           <div class="acct-tile-label">Savings</div>
           <div class="acct-tile-amount">$31,200</div>
-          <div class="acct-tile-change">↑ 4.8% APY</div>
+          <div class="acct-tile-change" id="savings-apy" style="color:#94a3b8">0.5% APY</div>
         </div>
         <div class="acct-tile">
           <div class="acct-tile-label">Credit Available</div>
@@ -390,12 +412,52 @@
         </div>
       </div>
 
-      <div class="promo-card">
+      <div class="promo-card" id="savings-promo">
         <div class="promo-text">
           <strong>Put your $12,400 to work</strong>
-          <span>Move to a Meridian High-Yield account and earn 4.8% APY — that's $595/year.</span>
+          <span id="savings-promo-text">Move to a Meridian High-Yield account and earn 4.8% APY — that's $595/year more.</span>
         </div>
-        <button class="promo-btn">Learn More</button>
+        <button class="promo-btn" id="savings-promo-btn">Learn More</button>
+      </div>
+
+      <!-- Mortgage section — driven by agent -->
+      <div class="section-title" style="margin-top:20px">Mortgage Options</div>
+      <div id="mortgage-section">
+        <div class="agent-section-label" id="mortgage-agent-label" style="display:none"></div>
+        <div class="rate-cards" id="rate-cards">
+          <div class="rate-card" id="rate-30yr">
+            <div class="rate-card-label">30-Year Fixed</div>
+            <div class="rate-card-rate">6.4%</div>
+            <div class="rate-card-detail">Monthly est. $2,491 on $400k</div>
+          </div>
+          <div class="rate-card" id="rate-15yr">
+            <div class="rate-card-label">15-Year Fixed</div>
+            <div class="rate-card-rate">5.9%</div>
+            <div class="rate-card-detail">Monthly est. $3,370 on $400k</div>
+          </div>
+          <div class="rate-card" id="rate-arm">
+            <div class="rate-card-label">5/1 ARM</div>
+            <div class="rate-card-rate">5.1%</div>
+            <div class="rate-card-detail">Monthly est. $2,165 on $400k · adjusts yr 6</div>
+          </div>
+        </div>
+        <!-- Apply form — appears when agent hits human boundary -->
+        <div class="apply-form-card" id="apply-form-card" style="display:none">
+          <div class="apply-form-header">
+            <div class="apply-form-icon">👤</div>
+            <div>
+              <div class="apply-form-title">Your turn — complete the application</div>
+              <div class="apply-form-sub">Your agent found your best option. This step requires your identity verification and signature.</div>
+            </div>
+          </div>
+          <div class="apply-form-fields">
+            <div class="apply-field"><label>Full legal name</label><input type="text" value="Alex Rivera" /></div>
+            <div class="apply-field"><label>Property address</label><input type="text" placeholder="Enter property address" /></div>
+            <div class="apply-field"><label>Loan amount</label><input type="text" value="$400,000" /></div>
+          </div>
+          <button class="apply-submit-btn">Submit Application →</button>
+          <div class="apply-form-label">⚙️ <code>apply_for_loan</code> — human authorization required</div>
+        </div>
       </div>
     </div>
 
@@ -508,6 +570,13 @@ function resetActivityFeed() {
   if(applyBtn) { applyBtn.textContent = 'Apply for this rate →'; applyBtn.disabled = false; applyBtn.style.background = ''; }
   const switchBtn = document.getElementById('savings-switch-btn');
   if(switchBtn) { switchBtn.textContent = 'Switch to High-Yield →'; switchBtn.disabled = false; switchBtn.style.background = ''; }
+  // Clear center highlights
+  document.getElementById('mortgage-section').classList.remove('agent-highlight');
+  document.getElementById('mortgage-agent-label').style.display = 'none';
+  document.getElementById('rate-15yr').classList.remove('agent-selected');
+  document.getElementById('apply-form-card').style.display = 'none';
+  document.getElementById('savings-tile').classList.remove('agent-highlight');
+  document.getElementById('savings-promo').classList.remove('agent-highlight');
 }
 
 function addActivityLine(text, isDone, delay, container) {
@@ -528,10 +597,29 @@ function runMortgageFlow() {
   const feed = document.getElementById('webmcp-activity');
   const lines = document.getElementById('webmcp-activity-lines');
   feed.classList.add('show');
+  const mortgageSection = document.getElementById('mortgage-section');
+  const label = document.getElementById('mortgage-agent-label');
+  const rate15 = document.getElementById('rate-15yr');
   Promise.resolve()
-    .then(() => addActivityLine('🔍 Calling get_mortgage_rates...', false, 100, lines))
-    .then(() => addActivityLine('📊 Calling compare_products — 30-yr fixed vs 15-yr fixed vs ARM...', false, 500, lines))
-    .then(() => addActivityLine('✓ Analysis complete', true, 1100, lines))
+    .then(() => {
+      // Agent calls get_mortgage_rates → highlight mortgage section in center
+      mortgageSection.classList.add('agent-highlight');
+      label.style.display = 'flex';
+      label.textContent = '🤖 Your agent is browsing rates...';
+      mortgageSection.scrollIntoView({behavior:'smooth', block:'nearest'});
+      return addActivityLine('🔍 Calling get_mortgage_rates...', false, 100, lines);
+    })
+    .then(() => {
+      // Agent calls compare_products → 15yr card gets selected in center
+      return addActivityLine('📊 Calling compare_products — 30-yr vs 15-yr vs ARM...', false, 500, lines);
+    })
+    .then(() => {
+      setTimeout(() => {
+        rate15.classList.add('agent-selected');
+        label.textContent = '🤖 Agent identified best match';
+      }, 300);
+      return addActivityLine('✓ Analysis complete — 15-yr fixed is optimal', true, 1100, lines);
+    })
     .then(() => setTimeout(() => document.getElementById('webmcp-mortgage-result').classList.add('show'), 1500));
 }
 
@@ -540,9 +628,20 @@ function runSavingsFlow() {
   const feed = document.getElementById('webmcp-activity');
   const lines = document.getElementById('webmcp-activity-lines');
   feed.classList.add('show');
+  const savingsTile = document.getElementById('savings-tile');
+  const promoCard = document.getElementById('savings-promo');
   Promise.resolve()
-    .then(() => addActivityLine('🔍 Calling get_account_summary...', false, 100, lines))
-    .then(() => addActivityLine('📊 Calling browse_offers — savings products...', false, 500, lines))
+    .then(() => {
+      // Agent calls get_account_summary → highlight savings tile
+      savingsTile.classList.add('agent-highlight');
+      savingsTile.scrollIntoView({behavior:'smooth', block:'nearest'});
+      return addActivityLine('🔍 Calling get_account_summary...', false, 100, lines);
+    })
+    .then(() => {
+      // Agent calls browse_offers → highlight promo card
+      setTimeout(() => promoCard.classList.add('agent-highlight'), 400);
+      return addActivityLine('📊 Calling browse_offers — savings products...', false, 500, lines);
+    })
     .then(() => addActivityLine('✓ Personalized options ready', true, 1100, lines))
     .then(() => setTimeout(() => document.getElementById('webmcp-savings-result').classList.add('show'), 1500));
 }
@@ -553,6 +652,9 @@ function showMortgageHuman() {
   btn.textContent = '🔒 Requires human authorization';
   btn.disabled = true;
   btn.style.background = '#94a3b8';
+  // Drive center: show apply form below the highlighted rate card
+  document.getElementById('apply-form-card').style.display = 'block';
+  document.getElementById('apply-form-card').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function executeSavingsSwitch() {
@@ -571,6 +673,15 @@ function executeSavingsSwitch() {
       btn.textContent = '✓ Switched to High-Yield Savings';
       btn.style.background = '#065f46';
       btn.disabled = false;
+      // Drive center: update savings tile and promo card
+      const apyEl = document.getElementById('savings-apy');
+      apyEl.textContent = '↑ 4.8% APY';
+      apyEl.classList.add('savings-success');
+      document.getElementById('savings-promo-text').textContent = '✓ Switched to High-Yield — earning 4.8% APY as of tomorrow.';
+      document.getElementById('savings-promo-btn').textContent = '✓ Active';
+      document.getElementById('savings-promo-btn').style.background = '#059669';
+      document.getElementById('savings-promo-btn').style.color = '#fff';
+      document.getElementById('savings-tile').classList.remove('agent-highlight');
       showToast('✓ High-Yield Savings activated — 4.8% APY effective tomorrow');
     }, 1200));
 }
